@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JIVIKA AROGYA — Women's Health in Your Language</title>
+  <meta name="description" content="A calm, private health companion for women: menstrual tracking, physical and mental health education, nutrition, government schemes and nearby care. Available in 8 Indian languages.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    // Apply saved display settings before first paint to avoid a flash.
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="lang-pill">
+            <span class="dots-lang" aria-hidden="true">अ</span>
+            <span>English · हिन्दी · ಕನ್ನಡ · தமிழ் · తెలుగు · മലയാളം · বাংলা · ತುಳು</span>
+          </span>
+          <span class="eyebrow" data-i18n="home.eyebrow">For women, with care</span>
+          <h1 data-i18n-html="home.title">Your health, understood — <em>in your language</em>.</h1>
+          <p class="lede" data-i18n="home.sub">A calm, private companion for periods, physical and mental health, nutrition and affordable care — for villages and cities alike.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="dashboard.html">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
+              <span data-i18n="home.cta1">Open my dashboard</span>
+            </a>
+            <a class="btn btn-secondary btn-lg" href="assistant.html">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.2 8.2 0 0 1-8.2 8.2H9l-4.6 2.4v-5a8.2 8.2 0 0 1 4.6-13.9h3.3a8.2 8.2 0 0 1 8.2 8.2Z"/><path d="M8.8 9.2h6.4M8.8 12.6h4.2"/></svg>
+              <span data-i18n="home.cta2">Talk to the assistant</span>
+            </a>
+          </div>
+          <div class="hero-trust">
+            <span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg><span data-i18n="home.trust1">Private by design</span></span>
+            <span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M3.6 12h16.8"/><path d="M12 3.4c2.4 2.4 3.7 5.4 3.7 8.6s-1.3 6.2-3.7 8.6c-2.4-2.4-3.7-5.4-3.7-8.6S9.6 5.8 12 3.4Z"/></svg><span data-i18n="home.trust2">8 languages</span></span>
+            <span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg><span data-i18n="home.trust3">Free to use</span></span>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-value">8</span><span class="stat-label">Languages</span></div>
+            <div class="stat"><span class="stat-value">10</span><span class="stat-label">Health tools</span></div>
+            <div class="stat"><span class="stat-value">0</span><span class="stat-label">Records uploaded</span></div>
+          </div>
+        </div>
+        <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Quick access -->
+    <section class="section" id="tools">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow" data-i18n="home.quickTitle">Everything you need, in one place</span>
+          <h2 data-i18n="home.quickSub">Ten simple tools. No complicated menus. Start with whatever you need today.</h2>
+        </div>
+        <div class="grid-auto">
+          <a class="tile" href="dashboard.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></div>
+            <h3>Health Dashboard</h3>
+            <p>Your cycle, mood, water and reminders — one calm overview.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="menstrual.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c3.4 3.7 6 7 6 10a6 6 0 0 1-12 0c0-3 2.6-6.3 6-10Z"/></svg></div>
+            <h3>Menstrual Health</h3>
+            <p>Cycle calendar, predictions, symptoms and period education.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="physical.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.6-7.6-9.9A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.6 3.2c0 5.3-7.6 9.9-7.6 9.9Z"/><path d="M6.6 12.1h2.8l1.3-2.4 2 4.6 1.4-2.2h3.3"/></svg></div>
+            <h3>Physical Health</h3>
+            <p>Bones, heart, breast, skin and hair — with warning signs.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="mental.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.4 12.7 9l5.6 1.7-5.6 1.7L11 18l-1.7-5.6L3.7 10.7 9.3 9Z"/><path d="m18.4 16.2.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7Z"/></svg></div>
+            <h3>Mental Wellness</h3>
+            <p>Mood tracker, breathing, self-care and someone to call.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="nutrition.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c-1-6.2 3.4-13.6 15-15 1.2 9.8-4.6 15.6-12.6 15.6"/><path d="M4.8 19.2c2.3-4.6 5.5-8 10.2-10.4"/></svg></div>
+            <h3>Nutrition &amp; Diet</h3>
+            <p>Affordable meals by life stage, in your dietary preference.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="healthcare.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+            <h3>Nearby Healthcare</h3>
+            <p>Hospitals, PHCs, clinics and pharmacists around you.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="schemes.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+            <h3>Government Schemes</h3>
+            <p>Ayushman Bharat, maternity benefits and free care you qualify for.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="assistant.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.2 8.2 0 0 1-8.2 8.2H9l-4.6 2.4v-5a8.2 8.2 0 0 1 4.6-13.9h3.3a8.2 8.2 0 0 1 8.2 8.2Z"/><path d="M8.8 9.2h6.4M8.8 12.6h4.2"/></svg></div>
+            <h3>Health Assistant</h3>
+            <p>Ask a plain-language question and learn what to do next.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="tile" href="profile.html">
+            <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.9-3.7 3.9-5.7 7.5-5.7s6.6 2 7.5 5.7"/></svg></div>
+            <h3>Profile &amp; Privacy</h3>
+            <p>Consent, language, display size, export or delete your data.</p>
+            <span class="tile-link">Open<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section section-tight">
+      <div class="container">
+        <div class="grid-3">
+          <div class="card card-pad">
+            <div class="step-num">01</div>
+            <h3>Start without an account</h3>
+            <p>All health education is open to everyone. No login, no phone number, no OTP needed.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="step-num">02</div>
+            <h3>Track only what helps you</h3>
+            <p>Periods, moods, water, reminders. Everything stays in your own browser, on your own device.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="step-num">03</div>
+            <h3>Know when to get help</h3>
+            <p>Clear warning signs, first aid, helplines and government schemes — so you reach care sooner.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Languages -->
+    <section class="section" id="languages">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow" data-i18n="home.langTitle">Speak to us in the language you think in</span>
+          <h2 data-i18n="home.langSub">Choose a language, then use the display settings for larger text.</h2>
+        </div>
+        <div class="lang-grid" id="langGrid"></div>
+        <div class="callout info" style="margin-top:1.25rem;max-width:760px;margin-inline:auto">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p>Menus and labels are translated into all eight languages. Detailed medical articles stay in English on purpose — a mistranslated symptom or dose can be dangerous. Your ASHA worker or the 104 helpline can explain anything in your language.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Home remedies preview -->
+    <section class="section section-tight" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="row-between" style="margin-bottom:1.5rem">
+          <div class="section-head" style="margin-bottom:0">
+            <span class="eyebrow">Home care, safely</span>
+            <h2>Simple remedies — with the safety limits shown</h2>
+            <p>Every card tells you what may help, what to avoid, and when home care is no longer enough.</p>
+          </div>
+          <a class="btn btn-secondary" href="physical.html#remedies">View all remedy cards
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="grid-3" id="remedyPreview"></div>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section class="section">
+      <div class="container">
+        <div class="grid-2" style="align-items:center;gap:2.5rem">
+          <div>
+            <span class="eyebrow">You are not alone</span>
+            <h2 data-i18n="home.supportTitle">If today feels heavy, you are not alone</h2>
+            <p>Free, confidential helplines are open day and night. You can call about pain, violence, fear,
+              sadness — anything. You do not need to explain everything perfectly.</p>
+            <div class="stack-sm" style="margin-top:1.25rem">
+              <a class="contact-card" href="tel:181">
+                <div class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
+                <div class="cc-body"><h5>Women's Helpline</h5><p>Abuse, violence, safety — 24×7, free</p></div>
+                <span class="num">181</span>
+              </a>
+              <a class="contact-card" href="tel:14416">
+                <div class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
+                <div class="cc-body"><h5>Tele-MANAS mental health</h5><p>Talk to a counsellor in your language</p></div>
+                <span class="num">14416</span>
+              </a>
+              <a class="contact-card" href="tel:108">
+                <div class="icon-badge sm danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
+                <div class="cc-body"><h5>Ambulance</h5><p>Free emergency transport, any hour</p></div>
+                <span class="num">108</span>
+              </a>
+            </div>
+          </div>
+          <div class="card card-lg card-pad" style="background:var(--grad-soft)">
+            <div class="icon-badge lg lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c-1-6.2 3.4-13.6 15-15 1.2 9.8-4.6 15.6-12.6 15.6"/><path d="M4.8 19.2c2.3-4.6 5.5-8 10.2-10.4"/></svg></div>
+            <h3 style="margin-top:1rem">A gentle daily check-in</h3>
+            <p class="small">Two minutes a day is enough. Log how you feel, note your period, drink some water.
+              Over weeks, the pattern becomes clearer — and easier to explain to a doctor.</p>
+            <div class="row" style="margin-top:1.25rem">
+              <a class="btn btn-primary" href="dashboard.html">Open dashboard</a>
+              <a class="btn btn-ghost" href="mental.html">Mood check-in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section class="section section-tight">
+      <div class="container">
+        <div class="card card-lg card-pad" style="padding:clamp(1.5rem,4vw,2.75rem)">
+          <div class="grid-2" style="align-items:center;gap:2rem">
+            <div>
+              <span class="eyebrow" data-i18n="home.privacyTitle">Your body, your data</span>
+              <h2 data-i18n="home.privacySub">Nothing about your health leaves this device.</h2>
+              <ul class="bullet-check" style="margin-top:1rem">
+                <li>Health records are stored in your browser only — never on a server.</li>
+                <li>You are asked for consent before anything is saved.</li>
+                <li>One button deletes every record, permanently.</li>
+                <li>Basic health education needs no account at all.</li>
+              </ul>
+              <a class="btn btn-secondary" href="profile.html" style="margin-top:1.25rem">Review my privacy settings</a>
+            </div>
+            <div class="grid-2 keep" style="gap:.85rem">
+              <div class="card card-pad card-flat" style="background:var(--surface-3)">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+                <p class="small" style="margin-top:.6rem"><strong>Consent first</strong><br>Nothing saved until you say yes.</p>
+              </div>
+              <div class="card card-pad card-flat" style="background:var(--surface-3)">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+                <p class="small" style="margin-top:.6rem"><strong>Offline friendly</strong><br>Works on a slow connection.</p>
+              </div>
+              <div class="card card-pad card-flat" style="background:var(--surface-3)">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.9 13h9.2l.9-13"/><path d="M10.5 11v5M13.5 11v5"/></svg></div>
+                <p class="small" style="margin-top:.6rem"><strong>Delete anytime</strong><br>One tap, no questions.</p>
+              </div>
+              <div class="card card-pad card-flat" style="background:var(--surface-3)">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.9-3.7 3.9-5.7 7.5-5.7s6.6 2 7.5 5.7"/></svg></div>
+                <p class="small" style="margin-top:.6rem"><strong>No accounts needed</strong><br>Read everything first.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin-bottom:.4rem">Start with one small step today</h2>
+            <p class="small" style="margin:0;max-width:52ch">Log your period, note your mood, or just read about a symptom
+              that has been worrying you. There is no wrong way to begin.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="dashboard.html">Open dashboard</a>
+            <a class="btn btn-secondary" href="physical.html">Browse health topics</a>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1.25rem;text-align:center">
+          JIVIKA AROGYA provides health education only. It does not diagnose illness, prescribe medicines,
+          or replace a qualified doctor, nurse or ASHA worker.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/home.js" defer></script>
+</body>
+</html>

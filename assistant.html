@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Health Assistant — JIVIKA AROGYA</title>
+  <meta name="description" content="Ask general women's health questions in simple language. The assistant explains symptoms, suggests safe home care and tells you when to see a doctor or call 108.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="assistant">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Smart Health Assistant</span>
+            </div>
+            <h1 data-i18n="page.assistant">Smart Health Assistant</h1>
+            <p class="lede">Describe what you are feeling in your own words. The assistant explains what may be
+              happening, what can help at home, and when you must see a doctor — in simple language.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-danger" href="physical.html#emergency">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+              Emergency signs
+            </a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="chat" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="dash-grid">
+          <div class="card chat-shell" style="height:min(76vh,720px)">
+            <div class="chat-top">
+              <div class="who">
+                <div class="icon-badge lav sm">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.4 12.7 9l5.6 1.7-5.6 1.7L11 18l-1.7-5.6L3.7 10.7 9.3 9Z"/><path d="m18.4 16.2.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7Z"/></svg>
+                </div>
+                <div>
+                  <h2>JIVIKA Health Assistant</h2>
+                  <p><span class="status-dot"></span> Information only — not a doctor</p>
+                </div>
+              </div>
+              <div class="row" style="margin-left:auto;gap:.4rem">
+                <button class="btn btn-ghost btn-sm" type="button" id="chatClear">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></svg>
+                  New chat
+                </button>
+              </div>
+            </div>
+
+            <div class="chat-scroll" id="chatScroll" aria-live="polite" aria-label="Conversation"></div>
+
+            <div class="chat-compose">
+              <div class="chat-chips" id="chatChips"></div>
+              <div class="chat-input-row">
+                <label class="sr-only" for="chatInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Type your question</label>
+                <textarea id="chatInput" rows="1" placeholder="Type your question, for example: my period is late"></textarea>
+                <button class="send-btn" type="button" id="chatSend" aria-label="Send message">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10.5 13.5M21 3l-6.5 18-4-8.5L2 8.5Z"/></svg>
+                </button>
+              </div>
+              <p class="tiny muted" style="margin:0">Press Enter to send. The assistant cannot diagnose, prescribe or replace a doctor.</p>
+            </div>
+          </div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge danger sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+                <div><h4 style="margin:0">Stop chatting and call</h4><p>If any of these are happening now</p></div>
+              </div>
+              <ul class="flag-list">
+                <li>Chest pain, pressure or heaviness</li>
+                <li>Difficulty breathing, or lips turning blue</li>
+                <li>Fainting, confusion or a seizure</li>
+                <li>Bleeding that soaks a pad every hour</li>
+                <li>Thoughts of harming yourself</li>
+              </ul>
+              <div class="row" style="gap:.4rem;margin-top:.8rem">
+                <a class="btn btn-danger btn-sm" href="tel:108">Call 108</a>
+                <a class="btn btn-secondary btn-sm" href="tel:14416">Call 14416</a>
+              </div>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg></div>
+                <div><h4 style="margin:0">What it can help with</h4><p>General women's health information</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>Period pain, irregular or heavy periods</li>
+                <li>Discharge, itching and urine infections</li>
+                <li>PCOS, anaemia, thyroid and bone health</li>
+                <li>Breast changes, hair fall and skin</li>
+                <li>Low mood, sleep and stress</li>
+                <li>Pregnancy nutrition and menopause</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+                <div><h4 style="margin:0">Your privacy</h4><p>You stay in control</p></div>
+              </div>
+              <p class="small" id="privacyNote">Nothing is saved until you choose. You can clear the chat at any time,
+                and basic health information on this site never needs an account.</p>
+              <a class="btn btn-secondary btn-sm" href="profile.html">Privacy settings</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info" style="margin-top:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>How this works, honestly:</strong> this is a guided information assistant, not a live AI model
+            and not a doctor. It matches your words to a checked library of general women's health information. It can
+            miss things, so it will always tell you when to get real medical help. In an emergency, call 108.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Browse</span>
+          <h2>Common questions women ask</h2>
+          <p>Tap a question to ask it. You can also type your own words — the assistant understands simple English,
+            and an ASHA worker can help you translate.</p>
+        </div>
+        <div class="chip-row" id="topicChips" role="group" aria-label="Common questions"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Safety first</span>
+          <h2>How the assistant decides what to say</h2>
+          <p>Every answer is sorted into one of three levels. This is what decides whether you get home care advice
+            or an emergency warning.</p>
+        </div>
+
+        <div class="grid-3 keep" style="align-items:start">
+          <div class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+              <div><h4 style="margin:0">Emergency</h4><p>Call 108 now</p></div>
+            </div>
+            <p class="small">Words like chest pain, cannot breathe, fainting, heavy bleeding or thoughts of self-harm
+              skip all other advice. The assistant tells you to call 108 or 14416 and to tell someone near you.</p>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v5a5 5 0 0 0 10 0v-5"/><path d="M11 13.5V16a4 4 0 0 0 8 0v-2"/><circle cx="19" cy="10.5" r="2.4"/></svg></div>
+              <div><h4 style="margin:0">See a doctor</h4><p>Within a day or two</p></div>
+            </div>
+            <p class="small">Fever that will not settle, burning urine, unusual discharge, a new lump, bleeding after
+              menopause, or pain that is getting worse. The assistant explains what to say and where to go.</p>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5c-1-6.2 3.4-13.6 15-15 1.2 9.8-4.6 15.6-12.6 15.6"/><path d="M4.8 19.2c2.3-4.6 5.5-8 10.2-10.4"/></svg></div>
+              <div><h4 style="margin:0">Home care</h4><p>Watch for warning signs</p></div>
+            </div>
+            <p class="small">Mild cramps, a light cold, tiredness after a busy week. The assistant gives safe home
+              suggestions and tells you which warning signs mean the problem is no longer mild.</p>
+          </div>
+        </div>
+
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:75ch">The assistant never prescribes medicines,
+          never changes a prescribed dose and never says “you have” a disease. If an answer does not match your
+          situation, ignore it and speak to a qualified doctor, nurse or ASHA worker.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h3 style="margin-bottom:.4rem">Need a real person?</h3>
+            <p class="small" style="margin:0;max-width:54ch">Call 104 for free health advice in your language, or find
+              the nearest PHC, clinic or gynaecologist.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="healthcare.html">Find nearby care</a>
+            <a class="btn btn-secondary" href="tel:104">Call 104</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/assistant.js" defer></script>
+</body>
+</html>

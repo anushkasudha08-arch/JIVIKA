@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menstrual Health — JIVIKA AROGYA</title>
+  <meta name="description" content="Track your period, predict your next cycle, log symptoms and learn about irregular periods, menstrual hygiene and PCOS in simple language.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="menstrual">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Menstrual Health</span>
+            </div>
+            <h1 data-i18n="page.menstrual">Menstrual Health</h1>
+            <p class="lede">Track your cycle, understand your symptoms, and learn what is normal — and what needs a doctor.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#log">Log symptoms</a>
+            <button class="btn btn-primary" id="startToday" type="button">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c3.4 3.7 6 7 6 10a6 6 0 0 1-12 0c0-3 2.6-6.3 6-10Z"/></svg>
+              Period started today
+            </button>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="callout warn" style="margin-bottom:1.25rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>Cycle predictions are estimates.</strong> They are not a contraceptive method and cannot confirm or rule out pregnancy.
+            If your period is late and there is a chance of pregnancy, take a test or visit your PHC.</p>
+        </div>
+
+        <div class="dash-grid">
+          <div class="stack-lg">
+            <div class="card card-lg card-pad" id="calCard"></div>
+
+            <div class="card card-pad" id="log" style="scroll-margin-top:90px">
+              <div class="card-head">
+                <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 4.5 19.5 7.5 8.5 18.5H5.5v-3Z"/><path d="M14 7 17 10"/></svg></div>
+                <div><h3>Log a day</h3><p>Flow, pain and symptoms — it helps you see patterns</p></div>
+              </div>
+              <form id="logForm">
+                <div class="field-row">
+                  <div class="field" style="margin-bottom:.6rem">
+                    <label for="logDate">Date</label>
+                    <input class="input" type="date" id="logDate" required>
+                  </div>
+                  <div class="field" style="margin-bottom:.6rem">
+                    <label for="logFlow">Flow</label>
+                    <select class="select" id="logFlow">
+                      <option value="light">Light</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="heavy">Heavy</option>
+                      <option value="none">No bleeding</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field" style="margin-bottom:.75rem">
+                  <label for="logPain">Pain level: <span id="painValue" style="color:var(--pink-ink)">0</span> / 10</label>
+                  <input type="range" id="logPain" min="0" max="10" value="0" step="1">
+                  <span class="help">0 = no pain, 10 = worst pain you have felt</span>
+                </div>
+                <div class="field">
+                  <span class="label">Symptoms</span>
+                  <div class="symptom-pick" id="symptomPick"></div>
+                </div>
+                <div class="field">
+                  <label for="logNotes">Notes (optional)</label>
+                  <textarea class="textarea" id="logNotes" placeholder="Anything you want to remember — medicines taken, sleep, stress…"></textarea>
+                </div>
+                <label class="check" style="margin-bottom:1rem">
+                  <input type="checkbox" id="logStart">
+                  <span><strong>This was day 1 of my period</strong>
+                    Tick this to update your cycle predictions.</span>
+                </label>
+                <div class="row">
+                  <button class="btn btn-primary" type="submit">
+                    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+                    Save this day
+                  </button>
+                  <button class="btn btn-ghost" type="reset">Clear</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card card-pad" id="historyCard"></div>
+          </div>
+
+          <div class="stack-lg">
+            <div class="card card-pad" id="summaryCard"></div>
+
+            <div class="card card-pad" id="settingsCard">
+              <div class="card-head">
+                <div class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.5V12l3 2"/></svg></div>
+                <div><h4 style="margin:0">My cycle settings</h4><p>Used for predictions</p></div>
+              </div>
+              <form id="settingsForm">
+                <div class="field">
+                  <label for="setLast">First day of last period</label>
+                  <input class="input" type="date" id="setLast" required>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="setCycle">Cycle length</label>
+                    <input class="input" type="number" id="setCycle" min="18" max="60" step="1" required>
+                    <span class="help">Days from day 1 to the next day 1 (usually 21–35)</span>
+                  </div>
+                  <div class="field">
+                    <label for="setPeriod">Bleeding days</label>
+                    <input class="input" type="number" id="setPeriod" min="1" max="12" step="1" required>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Update predictions</button>
+              </form>
+            </div>
+
+            <div class="card card-pad" id="reminderSettings"></div>
+
+            <div class="card card-pad" id="insightsCard"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="section" id="learn" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Understand your body</span>
+          <h2>Menstrual health, explained simply</h2>
+          <p>Written for everyone — no medical background needed. Every section tells you when to ask for help.</p>
+        </div>
+
+        <div class="grid-3 keep" style="align-items:start;margin-bottom:1.75rem">
+          <div class="card card-pad">
+            <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg></div>
+            <h4 style="margin-top:.7rem">A usual cycle</h4>
+            <p class="small" style="margin:0">21–35 days between periods, bleeding for 2–7 days, and a loss of about 30–80 ml.
+              A day or two of variation each month is normal.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+            <h4 style="margin-top:.7rem">Needs attention</h4>
+            <p class="small" style="margin:0">Periods closer than 21 days or further than 35, bleeding over 7 days,
+              or pain that stops you working every month.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
+            <h4 style="margin-top:.7rem">Call for help</h4>
+            <p class="small" style="margin:0">Soaking a pad every hour, fainting, fever with pelvic pain,
+              or any bleeding after 12 months without periods.</p>
+          </div>
+        </div>
+
+        <div class="acc-group">
+          <details class="acc" open>
+            <summary><span class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c3.4 3.7 6 7 6 10a6 6 0 0 1-12 0c0-3 2.6-6.3 6-10Z"/></svg></span>
+              What counts as an irregular period?<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <p>A cycle is counted from the first day of bleeding to the day before the next bleeding starts.
+                A cycle shorter than 21 days, longer than 35 days, or varying by more than 7–9 days from month to month is
+                usually called irregular.</p>
+              <p><strong>Common causes:</strong> puberty and perimenopause, PCOS, thyroid problems, large weight change,
+                high stress, very intense exercise, some medicines, and breastfeeding.</p>
+              <p><strong>See a doctor if:</strong> you have had no period for 3 months (and are not pregnant), periods are
+                getting shorter and lighter, bleeding lasts more than 7 days, or bleeding happens between periods
+                or after sex.</p>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary><span class="icon-badge sm teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></span>
+              Menstrual hygiene: the basics that prevent infection<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <ul>
+                <li><strong>Pads:</strong> change every 4–6 hours, even on light days. Wash hands before and after.</li>
+                <li><strong>Cloth pads:</strong> wash with soap and water, dry fully in direct sunlight, and use a separate
+                  cloth each day. Never store a damp cloth folded.</li>
+                <li><strong>Menstrual cup:</strong> empty every 8–12 hours, wash with clean water and mild soap, and boil for
+                  5–10 minutes between cycles.</li>
+                <li><strong>Tampons:</strong> change every 4–8 hours. Use the lowest absorbency needed. Do not leave one in for
+                  more than 8 hours.</li>
+                <li><strong>Washing:</strong> plain water on the outside is enough. The vagina cleans itself. Do not use soap,
+                  perfume, antiseptic liquids or douching inside.</li>
+                <li><strong>Disposal:</strong> wrap pads in paper and put them in a bin. Do not flush them — they block drains
+                  and pollute water.</li>
+              </ul>
+              <div class="callout warn" style="margin-top:.75rem">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+                <p>Sudden fever with a rash, dizziness or a strong smell while using a tampon or cup needs urgent medical care.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary><span class="icon-badge sm lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></svg></span>
+              PCOS: what it is and why early care matters<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <p>Polycystic ovary syndrome (PCOS) is a hormonal condition. Eggs may not release regularly, periods become
+                irregular, and male-type hormones can rise. It affects roughly 1 in 5 women of reproductive age in India.</p>
+              <p><strong>Common signs:</strong> periods more than 35 days apart or missing, acne, extra facial or body hair,
+                hair thinning, weight gain around the belly, and difficulty becoming pregnant.</p>
+              <p><strong>What helps:</strong> medical assessment (usually an ultrasound and blood tests), regular movement,
+                steady meals with less refined sugar, good sleep, and treatment for specific concerns such as acne or
+                fertility. There is no single "cure" — it is managed over time.</p>
+              <p><strong>Do not:</strong> start hormonal tablets or "PCOS powders" on your own, especially without a diagnosis.
+                Some supplements sold online can harm the liver.</p>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary><span class="icon-badge sm amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></span>
+              Painful periods: when pain means something more<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <p><strong>Common period pain</strong> starts a day or two before bleeding or on the first day, feels like cramping
+                in the lower belly, and eases within 2–3 days. Heat, rest and simple pain relief usually help.</p>
+              <p><strong>Pain that needs investigation:</strong> pain that gets worse every year, pain during sex, pain when
+                passing stool, pain on one side, pain that continues after bleeding stops, or pain that does not respond to
+                ordinary pain relief. Endometriosis and fibroids are common causes.</p>
+              <p>Keep a simple record of dates and pain scores — the calendar on this page is enough. A doctor can act much
+                faster with that information.</p>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary><span class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 4.5 4.5v13c3.5 0 6 .5 7.5 2 1.5-1.5 4-2 7.5-2v-13c-3.5 0-6 .5-7.5 2Z"/><path d="M12 6.5v13"/></svg></span>
+              Common myths, answered<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <ul>
+                <li><strong>"Do not bathe during periods."</strong> False. Warm water bathing reduces cramps and keeps you clean.</li>
+                <li><strong>"Period blood is impure."</strong> False. It is blood and tissue from the uterus. No religious or
+                  social rule makes a woman untouchable during her period.</li>
+                <li><strong>"Severe pain is normal for women."</strong> Not always. Pain that disrupts work, school or sleep
+                  deserves a medical review.</li>
+                <li><strong>"You cannot get pregnant during periods."</strong> False. Sperm can survive several days, and cycle
+                  timing varies.</li>
+                <li><strong>"Iron tablets are only for anaemia."</strong> Iron should follow a test and a prescription, not a guess.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="acc">
+            <summary><span class="icon-badge sm teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></span>
+              When to consult a healthcare professional<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg></summary>
+            <div class="acc-body">
+              <ul>
+                <li>Soaking one pad per hour for 2 hours, or passing clots larger than a rupee coin repeatedly.</li>
+                <li>Bleeding for more than 7 days, or bleeding between periods or after sex.</li>
+                <li>No period for 3 months without pregnancy, or periods suddenly stopping after years of regularity.</li>
+                <li>Pain so severe that you cannot stand, work or sleep.</li>
+                <li>Fever, foul-smelling discharge, or severe lower abdominal pain.</li>
+                <li>Any bleeding after 12 months without a period (after menopause).</li>
+                <li>Bleeding during pregnancy, severe headache or swelling in pregnancy — go the same day.</li>
+              </ul>
+              <p style="margin-top:.7rem">Visit your PHC or Ayushman Arogya Mandir, or call <a href="tel:104">104</a> for
+                advice. For emergencies call <a href="tel:108">108</a>.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin-bottom:.4rem">Not sure whether to wait or see a doctor?</h2>
+            <p class="small" style="margin:0;max-width:54ch">Describe your symptoms to the health assistant and it will tell you
+              plainly whether you can watch at home, visit a PHC, or need urgent care.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="healthcare.html">Find nearby care</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/menstrual.js" defer></script>
+</body>
+</html>

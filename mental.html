@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mental Wellness — JIVIKA AROGYA</title>
+  <meta name="description" content="A private daily mood tracker, guided breathing, self-care routines, grounding exercises and trusted mental health helplines in simple language.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="mental">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Mental Wellness</span>
+            </div>
+            <h1 data-i18n="page.mental">Mental Wellness</h1>
+            <p class="lede">A quiet place to check in with yourself, breathe, and find the right support —
+              without judgement and without anyone else seeing it.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#checkin">Mood check-in</a>
+            <a class="btn btn-primary" href="#support">Get support</a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="callout danger" style="margin-bottom:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.6-7.6-9.9A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.6 3.2c0 5.3-7.6 9.9-7.6 9.9Z"/><path d="M6.6 12.1h2.8l1.3-2.4 2 4.6 1.4-2.2h3.3"/></svg>
+          <div>
+            <p><strong>If you are in danger or thinking about ending your life, please call now.</strong>
+              You deserve support, and these calls are free and confidential.</p>
+            <div class="row" style="gap:.5rem;margin-top:.7rem">
+              <a class="btn btn-danger btn-sm" href="tel:14416">Call 14416 · Tele-MANAS</a>
+              <a class="btn btn-secondary btn-sm" href="tel:112">Emergency 112</a>
+              <a class="btn btn-ghost btn-sm" href="#support">More helplines</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="stack-lg">
+            <div class="card card-pad card-lg" id="checkin" style="scroll-margin-top:90px">
+              <div class="card-head">
+                <div class="icon-badge lav">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.4 12.7 9l5.6 1.7-5.6 1.7L11 18l-1.7-5.6L3.7 10.7 9.3 9Z"/><path d="m18.4 16.2.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7Z"/></svg>
+                </div>
+                <div>
+                  <h3>How are you feeling today?</h3>
+                  <p>One tap is enough. There are no right answers.</p>
+                </div>
+              </div>
+              <div class="mood-row" id="moodRow" role="group" aria-label="Choose how you feel today"></div>
+              <div class="field" style="margin-top:1.15rem;margin-bottom:.9rem">
+                <label for="moodNote">Anything you want to add? (optional)</label>
+                <textarea class="textarea" id="moodNote" maxlength="240" placeholder="A word about your day, your sleep, or what is on your mind…"></textarea>
+                <span class="help">Only you can read this. It stays on this device.</span>
+              </div>
+              <div class="row">
+                <button class="btn btn-primary" type="button" id="saveMood">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+                  Save today's check-in
+                </button>
+                <span class="tiny muted" id="moodSaved"></span>
+              </div>
+            </div>
+
+            <div class="card card-pad" id="moodHistory"></div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c3.4 3.7 6 7 6 10a6 6 0 0 1-12 0c0-3 2.6-6.3 6-10Z"/></svg>
+                </div>
+                <div><h4 style="margin:0">Does your mood follow your cycle?</h4><p>PMS is common — severe PMS is treatable</p></div>
+              </div>
+              <p class="small" style="margin:0">In the week before a period, many women notice irritability, tearfulness,
+                bloating or trouble sleeping. That is PMS. When it is severe enough to disrupt work or relationships
+                every month, it may be PMDD — and it deserves proper medical care, not being told to “adjust”.</p>
+              <ul class="bullet-check" style="margin-top:.7rem">
+                <li>Log mood daily for two cycles so the pattern becomes visible.</li>
+                <li>Steady sleep, movement and regular meals reduce symptoms.</li>
+                <li>Show the record to a doctor if it affects your life every month.</li>
+              </ul>
+              <a class="btn btn-ghost btn-sm" href="menstrual.html" style="margin-top:.5rem">Open cycle tracker
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.6-7.6-9.9A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.6 3.2c0 5.3-7.6 9.9-7.6 9.9Z"/></svg></div>
+              <h3 style="margin:.7rem 0 .4rem">You are not alone</h3>
+              <p class="small" style="margin:0">Mood changes are normal. They are not a character flaw, a weakness, or
+                something you have to hide. Many women feel low or anxious around their periods, after childbirth,
+                during menopause, or when money and family pressures pile up.</p>
+              <p class="small" style="margin:.7rem 0 0">Talking about it — to a friend, an ASHA worker, a counsellor or a
+                doctor — is a sign of strength, not failure.</p>
+              <a class="btn btn-ghost btn-sm" href="#breathe" style="margin-top:.75rem">Take a breathing pause
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+
+            <div class="card card-pad" id="quickSupport"></div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+                <div><h4 style="margin:0">When to talk to a professional</h4><p>These are not signs of weakness</p></div>
+              </div>
+              <ul class="flag-list">
+                <li>Low mood, worry or hopelessness almost every day for more than 2 weeks</li>
+                <li>Sleep or appetite has changed a lot, or you cannot manage work or daily tasks</li>
+                <li>Panic attacks, or fear that stops you leaving the house</li>
+                <li>Thoughts of harming yourself or ending your life — get help today</li>
+                <li>After childbirth: constant sadness, guilt, or difficulty bonding with the baby</li>
+                <li>After violence, abuse or a miscarriage — support is available and it matters</li>
+              </ul>
+              <p class="tiny muted" style="margin-top:.7rem">Only a qualified professional can diagnose a mental health
+                condition. A website, including this one, cannot.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breathing -->
+    <section class="section" id="breathe" style="background:var(--surface-3);border-block:1px solid var(--line);scroll-margin-top:80px">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Two minutes</span>
+          <h2>Breathe with me</h2>
+          <p>Slow breathing tells your body it is safe. Follow the circle — no experience needed.
+            Stop if you feel dizzy and return to normal breathing.</p>
+        </div>
+
+        <div class="card card-pad card-lg">
+          <div class="grid-2" style="align-items:center;gap:2rem">
+            <div>
+              <div class="chip-row" id="breathChips" role="group" aria-label="Choose a breathing pattern"></div>
+              <p id="breathNote" class="small muted" style="margin-top:.9rem"></p>
+              <div class="row" style="margin-top:1.1rem;gap:.5rem">
+                <button class="btn btn-primary" type="button" id="breathStart">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5Z"/></svg>
+                  Start
+                </button>
+                <button class="btn btn-ghost" type="button" id="breathReset">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></svg>
+                  Reset
+                </button>
+                <span class="badge" id="breathRound" aria-live="polite">Round 1 of 8</span>
+              </div>
+              <p class="tiny muted" style="margin-top:.9rem">Sit comfortably with your feet on the floor. Breathe through
+                your nose if you can, and never force a long hold.</p>
+            </div>
+            <div class="breath-stage">
+              <div class="breath-orb" id="breathOrb">
+                <div>
+                  <div class="b-count" id="breathCount">4</div>
+                  <div class="b-label" id="breathLabel">Ready</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Daily care -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Small, repeatable, kind</span>
+          <h2>Everyday care for your mind</h2>
+          <p>None of this replaces treatment. These are simple habits that support sleep, energy and mood —
+            tick what you did today, without guilt for what you missed.</p>
+        </div>
+
+        <div class="dash-grid">
+          <div class="card card-pad" id="selfcareCard"></div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13.5A8.5 8.5 0 0 1 9.5 3a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></div>
+                <div><h4 style="margin:0">Sleep better tonight</h4><p>Five habits that help most people</p></div>
+              </div>
+              <ul class="bullet-check" id="sleepList"></ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+                <div><h4 style="margin:0">Signs your body is carrying stress</h4><p>Common, and treatable</p></div>
+              </div>
+              <ul class="flag-list" id="stressList"></ul>
+              <p class="tiny muted" style="margin-top:.75rem">Stress shows up in the body. If these signs last more than
+                two weeks, or you are not coping, please talk to someone — see
+                <a href="#support">support services</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grounding + journal -->
+    <section class="section" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="grid-2" style="align-items:start;gap:1.5rem">
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5h9a3 3 0 1 0-3-3"/><path d="M3.5 12.5h13a3 3 0 1 1-3 3"/><path d="M3.5 16.5h5.5"/></svg></div>
+              <div><h3>Grounding: come back to now</h3><p>For panic, racing thoughts or numbness</p></div>
+            </div>
+            <p class="small">When your mind is spinning, your senses bring you back to the present. Go slowly —
+              there is no need to rush.</p>
+            <ol class="firstaid-steps" id="groundingList" style="margin-top:1rem"></ol>
+            <p class="tiny muted" style="margin-top:.9rem">You can do this anywhere — on a bus, in a queue, at home.
+              Repeat as often as you need.</p>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 4.5 19.5 7.5 8.5 18.5H5.5v-3Z"/><path d="M14 7 17 10"/></svg></div>
+              <div><h3>Private journal</h3><p>A few lines, just for you</p></div>
+            </div>
+            <div class="callout" style="margin-bottom:1rem">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.2v5"/><circle cx="12" cy="7.9" r=".9" fill="currentColor" stroke="none"/></svg>
+              <p id="journalPrompt" style="font-weight:600"></p>
+            </div>
+            <div class="field">
+              <label for="journalText">Write whatever comes to mind</label>
+              <textarea class="textarea" id="journalText" rows="4" placeholder="No grammar, no judgement. Only you will read this."></textarea>
+            </div>
+            <div class="row">
+              <button class="btn btn-primary btn-sm" type="button" id="journalSave">Save entry</button>
+              <button class="btn btn-ghost btn-sm" type="button" id="journalNew">Another prompt</button>
+            </div>
+            <div id="journalList" style="margin-top:1rem"></div>
+            <p class="tiny muted" style="margin-top:.75rem">Entries are saved only in this browser. You can delete them
+              here or remove all records in <a href="profile.html">Profile &amp; Privacy</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section class="section" id="support" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Ask for help</span>
+          <h2>People you can call</h2>
+          <p>Free, confidential and available in many languages. You do not need a diagnosis or a reason
+            that sounds serious enough.</p>
+        </div>
+
+        <div class="grid-2" style="align-items:start;gap:1.5rem">
+          <div class="grid" id="supportGrid" style="gap:.6rem"></div>
+
+          <div class="stack">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3-.4-4.3-1.1L3.5 20l1.2-4.6A8.5 8.5 0 1 1 21 11.5Z"/></svg></div>
+                <div><h4 style="margin:0">What to say when you call</h4><p>You can read these lines aloud</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>“I have felt low or worried almost every day for more than two weeks.”</li>
+                <li>“I am not sleeping or eating properly, and I cannot cope with daily work.”</li>
+                <li>“I have thoughts that frighten me and I need to talk to someone.”</li>
+                <li>“I am safe right now, but I need help to stay safe.”</li>
+              </ul>
+              <p class="tiny muted" style="margin-top:.7rem">It is okay to cry, to pause, or to say you do not know
+                where to start. The person on the line is trained for this.</p>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge danger sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+                <div><h4 style="margin:0">If you feel unsafe right now</h4><p>A simple safety plan</p></div>
+              </div>
+              <ol class="firstaid-steps">
+                <li class="firstaid-step"><span class="n">1</span><p>Tell one person nearby how you feel and stay with them.</p></li>
+                <li class="firstaid-step"><span class="n">2</span><p>Move away from anything you could use to hurt yourself.</p></li>
+                <li class="firstaid-step"><span class="n">3</span><p>Call <a href="tel:14416">14416</a> or <a href="tel:112">112</a>, or go to the nearest hospital.</p></li>
+                <li class="firstaid-step"><span class="n">4</span><p>Do not use alcohol or other substances while you feel this way.</p></li>
+                <li class="firstaid-step"><span class="n">5</span><p>Write down one reason to stay, however small, and keep it with you.</p></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warn" style="margin-top:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>Never stop a prescribed mental health medicine suddenly.</strong> Stopping on your own can cause
+            withdrawal, a return of symptoms or dangerous changes. Talk to the doctor who prescribed it before any change.
+            Counselling and medicine often work best together.</p>
+        </div>
+
+        <div class="callout info" style="margin-top:.75rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.6-7.6-9.9A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.6 3.2c0 5.3-7.6 9.9-7.6 9.9Z"/></svg>
+          <p><strong>After childbirth:</strong> persistent sadness, guilt, scary thoughts, or feeling disconnected from your
+            baby can be postpartum depression. It is common, treatable, and not your fault. Tell your ASHA worker or doctor —
+            help is available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin-bottom:.4rem">Want to talk it through?</h2>
+            <p class="small" style="margin:0;max-width:54ch">The health assistant can explain symptoms and help you decide
+              where to go. It is not a crisis or counselling service — if you are in danger, please call 14416 or 112.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="healthcare.html">Find nearby care</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/mental.js" defer></script>
+</body>
+</html>

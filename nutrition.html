@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nutrition &amp; Diet — JIVIKA AROGYA</title>
+  <meta name="description" content="Simple, affordable food guidance for every life stage, with meal plans, key nutrients, budget foods and clear notes on what food can and cannot do.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="nutrition">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Nutrition &amp; Diet</span>
+            </div>
+            <h1 data-i18n="page.nutrition">Nutrition &amp; Diet</h1>
+            <p class="lede">Good food does not have to be expensive or fancy. Simple meals from your local market
+              can support your periods, bones, energy and mood.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#plans">Meal plans</a>
+            <a class="btn btn-primary" href="#budget">Budget foods</a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="plans" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="callout warn" style="margin-bottom:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>Food supports health — it does not replace prescribed treatment or medicines.</strong>
+            If you take medicine for anaemia, thyroid, diabetes, blood pressure or any other condition, continue it
+            exactly as prescribed. Never stop or change a dose because of a diet.</p>
+        </div>
+
+        <div class="dash-grid">
+          <div class="card card-pad card-lg" id="stageCard"></div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16a8 8 0 0 1-16 0Z"/><path d="M7 7.5c0-1.2 1.1-1.5 1.1-2.6M12 7.5c0-1.2 1.1-1.5 1.1-2.6M17 7.5c0-1.2 1.1-1.5 1.1-2.6"/></svg>
+                </div>
+                <div><h3 style="margin:0">The simple plate</h3><p>No weighing, no counting</p></div>
+              </div>
+              <div class="plate-visual" role="img" aria-label="Half vegetables, one quarter protein, one quarter whole grains"></div>
+              <ul class="plate-legend">
+                <li><i style="background:#43bfaf"></i><span><strong>Half the plate</strong> — vegetables and greens</span></li>
+                <li><i style="background:#ef86a5"></i><span><strong>One quarter</strong> — dal, egg, fish, paneer or chicken</span></li>
+                <li><i style="background:#ecb85f"></i><span><strong>One quarter</strong> — roti, rice or millet</span></li>
+              </ul>
+              <p class="tiny muted" style="margin:.7rem 0 0">Add a little oil or ghee, and drink water through the day.
+                This plate works for most adults — portions differ in pregnancy, illness or heavy work.</p>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge lav sm">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 4.5 4.5v13c3.5 0 6 .5 7.5 2 1.5-1.5 4-2 7.5-2v-13c-3.5 0-6 .5-7.5 2Z"/><path d="M12 6.5v13"/></svg>
+                </div>
+                <div><h4 style="margin:0">Your food preference</h4><p>All preferences can be healthy</p></div>
+              </div>
+              <div class="chip-row" id="prefChips" role="group" aria-label="Choose a food preference"></div>
+              <p class="small" id="prefNote" style="margin:.9rem 0 0"></p>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg>
+                </div>
+                <div><h4 style="margin:0">Keep food safe</h4><p>Prevents stomach infections</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>Wash vegetables and fruit with clean water before cutting.</li>
+                <li>Cook meat, fish and eggs fully; reheat leftovers only once.</li>
+                <li>Drink boiled, filtered or safely treated water where needed.</li>
+                <li>Do not keep cooked food at room temperature for more than 2 hours in hot weather.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nutrients -->
+    <section class="section" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">What your body needs</span>
+          <h2>Eight nutrients that matter for women</h2>
+          <p>What each one does, where to find it in everyday Indian food, and one practical tip.
+            Amounts are general for adults — your needs change in pregnancy, illness and after menopause.</p>
+        </div>
+        <div class="grid-auto" id="nutrientGrid" style="align-items:start"></div>
+        <p class="small muted" style="margin-top:1.25rem">These are general nutrition amounts, not a prescription.
+          Supplements should follow a blood test and a doctor's advice. Ask your PHC or dietitian if you have diabetes,
+          kidney disease, thyroid problems or are pregnant.</p>
+      </div>
+    </section>
+
+    <!-- What nutrition supports -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The connection</span>
+          <h2>How food supports your body</h2>
+          <p>Food is not a cure, but it changes how you feel day to day. Here is what it can realistically do.</p>
+        </div>
+
+        <div class="grid-2 keep" style="align-items:start">
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c3.4 3.7 6 7 6 10a6 6 0 0 1-12 0c0-3 2.6-6.3 6-10Z"/></svg></div>
+              <div><h4 style="margin:0">Menstrual health</h4><p>Iron, vitamin C and omega-3</p></div>
+            </div>
+            <p class="small">Every period loses iron. Regular iron-rich meals with vitamin C help replace it and reduce
+              the tiredness that comes with heavy periods. Omega-3 fats from flax, walnuts and small fish may ease
+              inflammation. Less salt and less strong tea can reduce bloating and cramps.</p>
+            <a class="btn btn-ghost btn-sm" href="menstrual.html">Track your cycle →</a>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M8 7h8M6 12h12M8 17h8"/></svg></div>
+              <div><h4 style="margin:0">Bone health</h4><p>Calcium, vitamin D and protein</p></div>
+            </div>
+            <p class="small">Bone strength is built in the teens and protected after menopause. Ragi, sesame, curd and
+              green leaves are cheap calcium sources. Vitamin D comes from morning sunlight as well as food.
+              Walking, stairs and light strength work tell the bones to stay strong.</p>
+            <a class="btn btn-ghost btn-sm" href="physical.html#conditions">Bone and joint conditions →</a>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.6-4.6-7.6-9.9A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.6 3.2c0 5.3-7.6 9.9-7.6 9.9Z"/><path d="M6.6 12.1h2.8l1.3-2.4 2 4.6 1.4-2.2h3.3"/></svg></div>
+              <div><h4 style="margin:0">Steady energy</h4><p>Iron, B12 and regular meals</p></div>
+            </div>
+            <p class="small">Skipping meals causes the afternoon crash that many women blame on weakness. A protein
+              source at each meal, whole grains instead of only refined flour, and enough water keep energy steadier.
+              Constant tiredness needs a haemoglobin and B12 check — not another cup of tea.</p>
+            <a class="btn btn-ghost btn-sm" href="physical.html#conditions">Anaemia information →</a>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.4 12.7 9l5.6 1.7-5.6 1.7L11 18l-1.7-5.6L3.7 10.7 9.3 9Z"/><path d="m18.4 16.2.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7Z"/></svg></div>
+              <div><h4 style="margin:0">Mood and gut</h4><p>Fibre, curd and routine</p></div>
+            </div>
+            <p class="small">The gut and the brain talk to each other. Fibre from vegetables and whole grains, and
+              fermented foods such as curd, support gut health. Regular meal times help sleep and mood. Food can support
+              wellbeing, but depression and anxiety need proper care — not a diet alone.</p>
+            <a class="btn btn-ghost btn-sm" href="mental.html">Mental wellness support →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Budget foods -->
+    <section class="section" id="budget" style="background:var(--surface-3);border-block:1px solid var(--line);scroll-margin-top:80px">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Affordable and local</span>
+          <h2>Strong nutrition for little money</h2>
+          <p>These foods are usually available in village markets and small shops, and cost less than packaged
+            supplements. Prices vary by region and season.</p>
+        </div>
+
+        <div class="card card-pad card-lg" style="margin-bottom:1.5rem">
+          <div class="card-head">
+            <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M9.5 14.2c.5.7 1.4 1.1 2.5 1.1 1.6 0 2.6-.7 2.6-1.8 0-1.2-1.1-1.6-2.6-1.9-1.5-.3-2.4-.8-2.4-1.9 0-1.1 1-1.8 2.4-1.8 1 0 1.8.4 2.3 1"/><path d="M12 6.7v10.6"/></svg></div>
+            <div><h3>One balanced day for about ₹60–80</h3><p>An example using the foods below</p></div>
+          </div>
+          <div class="grid-4 keep" style="gap:1rem">
+            <div>
+              <span class="eyebrow" style="margin-bottom:.25rem">Breakfast</span>
+              <p class="small" style="margin:0">Poha with peanuts and lemon, or ragi porridge with milk</p>
+            </div>
+            <div>
+              <span class="eyebrow" style="margin-bottom:.25rem">Lunch</span>
+              <p class="small" style="margin:0">Dal, seasonal greens, roti or rice, and a piece of jaggery</p>
+            </div>
+            <div>
+              <span class="eyebrow" style="margin-bottom:.25rem">Snack</span>
+              <p class="small" style="margin:0">Roasted chana, sprouts or a seasonal fruit</p>
+            </div>
+            <div>
+              <span class="eyebrow" style="margin-bottom:.25rem">Dinner</span>
+              <p class="small" style="margin:0">Vegetable khichdi with curd, or millet roti with dal</p>
+            </div>
+          </div>
+          <p class="tiny muted" style="margin:1rem 0 0">Costs are indicative for one person and differ between states.
+            If money is short, dal, greens, jaggery and eggs give the most nutrition per rupee.</p>
+        </div>
+
+        <div class="grid-auto" id="budgetGrid" style="align-items:start"></div>
+        <p class="small muted" style="margin-top:1.25rem">Ask your Anganwadi worker or ASHA worker about subsidised
+          rations, take-home nutrition and the POSHAN programme — see
+          <a href="schemes.html">Government Schemes</a>.</p>
+      </div>
+    </section>
+
+    <!-- Safety -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Stay safe</span>
+          <h2>Supplements and when to ask for help</h2>
+          <p>More is not better. Some supplements are useful when prescribed, and harmful when taken blindly.</p>
+        </div>
+
+        <div class="grid-2 keep" style="align-items:start">
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="9" width="17.6" height="6.4" rx="3.2" transform="rotate(-45 12 12)"/><path d="M9.2 8.2 15.8 14.8"/></svg></div>
+              <div><h4 style="margin:0">Before buying a supplement</h4><p>Iron, calcium, B12 and folic acid</p></div>
+            </div>
+            <ul class="flag-list">
+              <li>Iron tablets should follow a haemoglobin test — too much iron damages the liver.</li>
+              <li>Calcium and iron tablets are best taken at different times of day.</li>
+              <li>Folic acid is started before pregnancy on a doctor's advice.</li>
+              <li>B12 supplementation matters for long-term vegetarian and vegan diets.</li>
+              <li>Do not buy “hormone balance”, “fat burner” or “slimming” products online without medical advice.</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.8rem">Ask your pharmacist to explain the dose, timing and side effects.
+              Keep all medicines out of children's reach.</p>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg></div>
+              <div><h4 style="margin:0">When food advice is not enough</h4><p>Please see a doctor or dietitian</p></div>
+            </div>
+            <ul class="flag-list">
+              <li>You cannot keep food or fluids down, or you are losing weight without trying.</li>
+              <li>Severe vomiting in pregnancy, or you feel dizzy and weak.</li>
+              <li>Constant tiredness with heavy periods, pale skin or breathlessness.</li>
+              <li>You have diabetes, kidney disease, thyroid problems or are pregnant — your diet needs individual advice.</li>
+              <li>A child is not growing or eating well — ask at the Anganwadi centre.</li>
+            </ul>
+            <a class="btn btn-secondary btn-sm" href="healthcare.html" style="margin-top:.85rem">Find nearby care</a>
+          </div>
+        </div>
+
+        <div class="callout info" style="margin-top:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 4.5 4.5v13c3.5 0 6 .5 7.5 2 1.5-1.5 4-2 7.5-2v-13c-3.5 0-6 .5-7.5 2Z"/><path d="M12 6.5v13"/></svg>
+          <p><strong>There is no single “women's diet”.</strong> Your needs depend on your age, work, health conditions,
+            pregnancy and what is available locally. Use these plans as a starting point and adjust with your health worker.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin-bottom:.4rem">Have a nutrition question?</h2>
+            <p class="small" style="margin:0;max-width:54ch">Ask the health assistant about iron, calcium, periods or
+              pregnancy nutrition — or find the nearest PHC and Anganwadi support.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="schemes.html">Nutrition schemes</a>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:70ch">JIVIKA AROGYA provides general nutrition education
+          only. It does not prescribe diets, supplements or medicines. For individual advice, consult a qualified doctor
+          or dietitian.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/nutrition.js" defer></script>
+</body>
+</html>

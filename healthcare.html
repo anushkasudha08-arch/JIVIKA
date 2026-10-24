@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nearby Healthcare — JIVIKA AROGYA</title>
+  <meta name="description" content="Find hospitals, clinics, doctors and pharmacies near you, understand the public health system, and know which level of care you need.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="healthcare">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Nearby Healthcare</span>
+            </div>
+            <h1 data-i18n="page.healthcare">Nearby Healthcare</h1>
+            <p class="lede">Find a hospital, clinic, doctor or pharmacy close to you — and understand which level of
+              care is right for your problem before you travel.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#helplines">Helplines</a>
+            <a class="btn btn-primary" href="#find">Find care near me</a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="find" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="emergency-strip" style="margin-bottom:2rem">
+          <div class="icon-badge danger">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+          </div>
+          <div style="flex:1;min-width:220px">
+            <p><strong>If this is an emergency, do not search first.</strong> Call 108 for a free ambulance,
+              or 112 for police, fire and ambulance together.</p>
+          </div>
+          <a class="btn btn-danger" href="tel:108">Call 108</a>
+          <a class="btn btn-secondary" href="tel:112">Call 112</a>
+        </div>
+
+        <div class="dash-grid">
+          <div class="card card-pad card-lg" id="findCare">
+            <div class="card-head">
+              <div class="icon-badge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+              <div><h2 style="margin:0;font-size:1.3rem">Find care near you</h2>
+                <p>Use your location, or type a village, town or district name</p></div>
+            </div>
+
+            <div class="row" style="margin-bottom:1rem">
+              <button class="btn btn-primary" type="button" id="useLoc">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/><circle cx="12" cy="12" r="7.5"/></svg>
+                Use my location
+              </button>
+              <a class="btn btn-secondary" id="mapsFallback" href="https://www.google.com/maps/search/hospitals+near+me" target="_blank" rel="noopener">
+                Open in Maps
+              </a>
+            </div>
+
+            <div class="field">
+              <label for="placeInput">Or type a place</label>
+              <div class="row" style="gap:.5rem;flex-wrap:nowrap">
+                <input class="input" id="placeInput" type="search" autocomplete="off" placeholder="For example: Belagavi, Karnataka">
+                <button class="btn btn-secondary" type="button" id="searchPlace" style="flex:none">Search</button>
+              </div>
+              <p class="help">Your location is used only for this search and is never saved or shared.</p>
+            </div>
+
+            <div class="field" style="margin-bottom:.75rem">
+              <span class="label">How far can you travel?</span>
+              <div class="chip-row" id="radiusChips" role="group" aria-label="Search radius"></div>
+            </div>
+
+            <div class="field" style="margin-bottom:.9rem">
+              <span class="label">What do you need?</span>
+              <div class="chip-row" id="typeChips" role="group" aria-label="Type of facility"></div>
+            </div>
+
+            <p class="small" id="findStatus" role="status" aria-live="polite" style="margin:0 0 .85rem;color:var(--muted)">
+              No search yet. Results come from a free, open map and need no account.
+            </p>
+
+            <p class="small muted" id="resultCount" style="margin:0 0 .6rem"></p>
+            <div class="stack" id="facilityList" aria-live="polite"></div>
+
+            <p class="tiny muted" style="margin:1rem 0 0">Facility details come from OpenStreetMap, a free community map.
+              Names, phone numbers and timings can be missing or out of date — always call before travelling.
+              Village health centres and small private clinics are often not mapped.</p>
+          </div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg></div>
+                <div><h4 style="margin:0">How to read the results</h4><p>What the app can and cannot know</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li><strong>Distance is a straight line</strong>, not road distance. Hills, rivers and traffic can make it longer.</li>
+                <li>A big hospital may be farther but can treat more — read which level of care you need.</li>
+                <li>Phone numbers appear only when someone mapped them. Call 104 if you cannot reach a facility.</li>
+                <li>This list is not a recommendation or a ranking of quality.</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+                <div><h4 style="margin:0">Before you travel</h4><p>Small steps that save a wasted trip</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>Call ahead and ask if the doctor or gynaecologist is available today.</li>
+                <li>Carry your ID, any previous prescriptions, reports and medicine strips.</li>
+                <li>Note the first day of your last period and your symptoms.</li>
+                <li>Take a family member or ASHA worker if you feel weak or dizzy.</li>
+                <li>For a government hospital, ask about the outpatient (OPD) timings before leaving.</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.2 8.2 0 0 1-8.2 8.2H9l-4.6 2.4v-5a8.2 8.2 0 0 1 4.6-13.9h3.3a8.2 8.2 0 0 1 8.2 8.2Z"/><path d="M8.8 9.2h6.4M8.8 12.6h4.2"/></svg></div>
+                <div><h4 style="margin:0">If you cannot travel</h4><p>Care by phone and video</p></div>
+              </div>
+              <p class="small">Call <strong>104</strong> to speak to a health worker in your language. Ask your ASHA worker
+                about home visits, or use <strong>eSanjeevani</strong> for a free government video consultation.
+                A phone consultation cannot examine you — if symptoms are severe, go in person or call 108.</p>
+              <div class="row" style="gap:.4rem">
+                <a class="btn btn-secondary btn-sm" href="tel:104">Call 104</a>
+                <a class="btn btn-ghost btn-sm" href="schemes.html">Free treatment schemes →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Levels of care -->
+    <section class="section" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Where to go</span>
+          <h2>The public health system, step by step</h2>
+          <p>Start at the lowest level that can handle your problem. Going straight to a district hospital for a
+            small problem means long queues; staying home for a serious one is dangerous.</p>
+        </div>
+
+        <div class="grid-3 keep" style="align-items:start">
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">1</div>
+              <div><h4 style="margin:0">ASHA worker</h4><p>Your first contact in the village</p></div>
+            </div>
+            <p class="small">A trained woman from your own village. She can check your blood pressure, give iron and
+              folic acid tablets, arrange a pregnancy check-up, and tell you where to go.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Pregnancy and newborn care, immunisation</li>
+              <li>Family planning and menstrual problems</li>
+              <li>Referral and transport to a facility</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Free. Usually available every day in the village.</p>
+          </article>
+
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">2</div>
+              <div><h4 style="margin:0">Sub-centre / ANM</h4><p>Basic care and tests</p></div>
+            </div>
+            <p class="small">Run by an Auxiliary Nurse Midwife (ANM), often for 3–5 villages. Good for a first check,
+              iron tablets, immunisation and simple medicines.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Fever, cough, body pain and minor injuries</li>
+              <li>Antenatal checks and haemoglobin testing</li>
+              <li>Contraception and health advice</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Free or very low cost. Morning hours on fixed days.</p>
+          </article>
+
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">3</div>
+              <div><h4 style="margin:0">PHC / Arogya Mandir</h4><p>Doctor and basic lab</p></div>
+            </div>
+            <p class="small">A primary health centre has a doctor, nurses and a small laboratory. Most common women's
+              health problems can be treated here.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Period problems, infections, anaemia</li>
+              <li>Diabetes and blood pressure checks</li>
+              <li>General medicines from the pharmacy</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Free for most services. Ask for the OPD day and timing.</p>
+          </article>
+
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">4</div>
+              <div><h4 style="margin:0">CHC</h4><p>Specialists for several PHCs</p></div>
+            </div>
+            <p class="small">A community health centre is usually a 30-bed hospital with a surgeon, physician,
+              gynaecologist and paediatrician, plus X-ray and a laboratory.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Pregnancy complications and delivery</li>
+              <li>Severe period pain and heavy bleeding</li>
+              <li>Minor surgery, fractures and blood tests</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Free or low cost. Ask which days the gynaecologist sits.</p>
+          </article>
+
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">5</div>
+              <div><h4 style="margin:0">District hospital</h4><p>Full specialist care</p></div>
+            </div>
+            <p class="small">Hundreds of beds, a blood bank, ultrasound, CT or MRI, intensive care and operation
+              theatres. This is where most serious women's health problems are treated.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Heavy bleeding, severe pain, injury</li>
+              <li>Cancer checks, biopsy and blood transfusion</li>
+              <li>Second opinion when treatment has not worked</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Free or low cost. Take a referral if you have one.</p>
+          </article>
+
+          <article class="card card-pad care-level">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="care-num">6</div>
+              <div><h4 style="margin:0">Medical college</h4><p>Rare and complex problems</p></div>
+            </div>
+            <p class="small">For cancer care, complex surgery, IVF or conditions that need many specialists together.
+              Usually in the district headquarters.</p>
+            <ul class="flag-list" style="margin-top:.55rem">
+              <li>Cancer diagnosis and treatment</li>
+              <li>Complex pregnancy and newborn intensive care</li>
+              <li>Second opinion after treatment has not worked</li>
+            </ul>
+            <p class="tiny muted" style="margin-top:.7rem">Ask about the free scheme counter and referral requirement.</p>
+          </article>
+        </div>
+
+        <p class="small muted" style="margin-top:1.25rem">When in doubt, call <a href="tel:104">104</a> and describe
+          your symptoms. The health worker will tell you which level to go to.</p>
+      </div>
+    </section>
+
+    <!-- Gynaecologist -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">A specialist for women</span>
+          <h2>How to find a good gynaecologist</h2>
+          <p>A gynaecologist is a doctor trained in women's reproductive health. You do not need a referral to see one
+            at most government hospitals.</p>
+        </div>
+
+        <div class="grid-2 keep" style="align-items:start">
+          <div class="card card-pad">
+            <ol class="firstaid-steps">
+              <li class="firstaid-step"><span class="n">1</span>
+                <div><strong>Ask at your PHC first.</strong> A medical officer can treat most problems and refer you to
+                  the gynaecologist at the CHC or district hospital if needed.</div></li>
+              <li class="firstaid-step"><span class="n">2</span>
+                <div><strong>Look for the OBG department.</strong> In government hospitals it is called Obstetrics and
+                  Gynaecology (OBG) and is listed on the hospital's OPD board.</div></li>
+              <li class="firstaid-step"><span class="n">3</span>
+                <div><strong>Check registration in private clinics.</strong> You can ask to see the doctor's registration
+                  number and the clinic's board. Do not use unregistered “ladies' clinics”.</div></li>
+              <li class="firstaid-step"><span class="n">4</span>
+                <div><strong>For a second opinion, carry your records.</strong> Reports, prescriptions and scan films help
+                  the new doctor understand what has already been tried.</div></li>
+            </ol>
+          </div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.2 8.2 0 0 1-8.2 8.2H9l-4.6 2.4v-5a8.2 8.2 0 0 1 4.6-13.9h3.3a8.2 8.2 0 0 1 8.2 8.2Z"/><path d="M8.8 9.2h6.4M8.8 12.6h4.2"/></svg></div>
+                <div><h4 style="margin:0">Questions worth asking</h4><p>You are allowed to ask all of these</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>What is the likely cause of my symptoms?</li>
+                <li>Which tests do I need, and where can I get them free?</li>
+                <li>What are the side effects of this medicine?</li>
+                <li>Do I need to come back, and when?</li>
+                <li>What warning signs should bring me back sooner?</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5Z"/><path d="M14 3.5v5h5"/></svg></div>
+                <div><h4 style="margin:0">Carry these to the visit</h4><p>It saves a second trip</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>Any government ID and your health card or ABHA number, if you have one.</li>
+                <li>All medicines you take, or their strips and prescriptions.</li>
+                <li>Dates of your last two or three periods.</li>
+                <li>Previous scans, blood reports and discharge papers.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Low cost care -->
+    <section class="section" style="background:var(--surface-3);border-block:1px solid var(--line)">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Affordable care</span>
+          <h2>Free and low-cost options</h2>
+          <p>You do not have to pay private fees for basic care. These services exist in most districts.</p>
+        </div>
+
+        <div class="grid-auto" style="align-items:start">
+          <article class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="9" width="17.6" height="6.4" rx="3.2" transform="rotate(-45 12 12)"/><path d="M9.2 8.2 15.8 14.8"/></svg></div>
+              <div><h4 style="margin:0">Jan Aushadhi pharmacy</h4><p>Generic medicines at low prices</p></div>
+            </div>
+            <p class="small">Government-run shops sell quality generic medicines, often 50–90% cheaper than branded
+              versions. Ask the pharmacist to explain how to take them — the medicine is the same, only the name differs.</p>
+            <a class="btn btn-ghost btn-sm" href="schemes.html">About the scheme →</a>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="6.5" width="17" height="12" rx="2.5"/><path d="M8 6.5v12"/><path d="M16.5 10.5h1.5M16.5 14h1.5"/></svg></div>
+              <div><h4 style="margin:0">eSanjeevani</h4><p>Free video consultation</p></div>
+            </div>
+            <p class="small">The national telemedicine service connects you to a government doctor by video. Useful for
+              follow-ups, reports and simple problems when travel is difficult.</p>
+            <a class="btn btn-ghost btn-sm" href="https://esanjeevani.mohfw.gov.in/" target="_blank" rel="noopener">Open eSanjeevani ↗</a>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge pink"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.4"/><path d="M2.8 20c.7-3.3 3.2-5 6.2-5s5.5 1.7 6.2 5"/><path d="M16.2 5.6a3.4 3.4 0 0 1 0 6.4M17.6 15.4c2.1.4 3.4 1.9 3.9 4.6"/></svg></div>
+              <div><h4 style="margin:0">ASHA and ANM visits</h4><p>Care that comes to your village</p></div>
+            </div>
+            <p class="small">ASHA workers provide iron tablets, condoms, pregnancy tests and referrals free of cost.
+              They also accompany women to the facility for delivery and serious illness.</p>
+            <a class="btn btn-ghost btn-sm" href="#find">Find your nearest centre →</a>
+          </article>
+
+          <article class="card card-pad">
+            <div class="card-head" style="margin-bottom:.5rem">
+              <div class="icon-badge amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+              <div><h4 style="margin:0">Ayushman Bharat</h4><p>Free treatment up to ₹5 lakh</p></div>
+            </div>
+            <p class="small">Eligible families get cashless treatment at empanelled hospitals for many conditions,
+              including women's health and cancer care. Ask at the hospital's Ayushman counter.</p>
+            <a class="btn btn-ghost btn-sm" href="schemes.html">Check eligibility →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Helplines -->
+    <section class="section" id="helplines" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Someone to call</span>
+          <h2>Health and support helplines</h2>
+          <p>All of these are free to call from any phone in India. You can ask in your own language.</p>
+        </div>
+        <div class="grid-auto" id="helplineGrid" style="align-items:start"></div>
+        <div class="callout info" style="margin-top:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>What to say when you call:</strong> give your name, age, village or town, the main symptom, when it
+            started, and whether you are pregnant. If you have a phone number for a facility, save it before an emergency.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h3 style="margin-bottom:.4rem">Need help deciding where to go?</h3>
+            <p class="small" style="margin:0;max-width:54ch">Describe your symptoms to the health assistant. It can
+              explain which level of care fits, without diagnosing you.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="schemes.html">Government schemes</a>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:70ch">JIVIKA AROGYA does not provide medical care and
+          cannot confirm whether a facility is suitable for your condition. Facility information comes from
+          OpenStreetMap and may be incomplete. Always confirm by phone or with your ASHA worker.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/healthcare.js" defer></script>
+</body>
+</html>

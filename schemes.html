@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Government Schemes — JIVIKA AROGYA</title>
+  <meta name="description" content="Verified central and state government health schemes for women, what each one gives, who can apply, the documents needed and how to apply without paying an agent.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="schemes">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Government Schemes</span>
+            </div>
+            <h1 data-i18n="page.schemes">Government Schemes</h1>
+            <p class="lede">Free and low-cost treatment you are already entitled to. What each scheme gives,
+              who can apply, the papers you need, and how to apply without paying anyone.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#checklist">Application checklist</a>
+            <a class="btn btn-primary" href="#schemes">Find a scheme</a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="schemes" style="scroll-margin-top:80px">
+      <div class="container">
+        <div class="callout warn" style="margin-bottom:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>Applying is free. Never pay an agent.</strong> Forms are available at government hospitals,
+            Anganwadi centres and Common Service Centres (CSC). No scheme on this page requires a payment to apply,
+            and no genuine officer asks for your OTP.</p>
+        </div>
+
+        <div class="card card-pad card-lg" style="margin-bottom:1.5rem">
+          <div class="card-head">
+            <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></div>
+            <div><h2 style="margin:0;font-size:1.32rem">Find the scheme that fits you</h2>
+              <p>Filter by who runs it and what you need</p></div>
+          </div>
+
+          <div class="field" style="margin-bottom:1rem">
+            <label for="schemeSearch">Search by name or need</label>
+            <input class="input" id="schemeSearch" type="search" autocomplete="off" placeholder="For example: delivery, cancer, sanitary napkins, Ayushman">
+          </div>
+
+          <div class="field" style="margin-bottom:.9rem">
+            <span class="label">Who runs the scheme?</span>
+            <div class="chip-row" id="levelChips" role="group" aria-label="Filter by level"></div>
+          </div>
+
+          <div class="field" style="margin-bottom:1rem">
+            <span class="label">What do you need?</span>
+            <div class="chip-row" id="catChips" role="group" aria-label="Filter by category"></div>
+          </div>
+
+          <p class="small muted" id="schemeCount" role="status" aria-live="polite" style="margin:0"></p>
+        </div>
+
+        <div class="grid-2 keep" id="schemeGrid" style="align-items:start"></div>
+
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:78ch">Scheme rules, amounts and eligibility change.
+          The state examples below are for Karnataka, Telangana, Andhra Pradesh and Tamil Nadu — every state has its own
+          version. Confirm the current rules with your PHC, Anganwadi or district health office before applying.</p>
+      </div>
+    </section>
+
+    <!-- Apply checklist -->
+    <section class="section" id="checklist" style="background:var(--surface-3);border-block:1px solid var(--line);scroll-margin-top:80px">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Step by step</span>
+          <h2>Your application checklist</h2>
+          <p>Most applications fail because a document is missing or the form is never followed up.
+            Tick these off as you go — your progress stays on this device.</p>
+        </div>
+
+        <div class="dash-grid">
+          <div class="card card-pad card-lg" id="checklistCard"></div>
+
+          <div class="stack-lg">
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5Z"/><path d="M14 3.5v5h5"/></svg></div>
+                <div><h4 style="margin:0">Keep these ready</h4><p>Copies, not originals, where possible</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li>Aadhaar card and ration card</li>
+                <li>Bank passbook in your own name, linked to Aadhaar</li>
+                <li>MCP card (mother and child protection card) if pregnant</li>
+                <li>Any previous prescriptions, reports or discharge papers</li>
+                <li>Two passport-size photographs, for some schemes</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad">
+              <div class="card-head">
+                <div class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.4"/><path d="M2.8 20c.7-3.3 3.2-5 6.2-5s5.5 1.7 6.2 5"/><path d="M16.2 5.6a3.4 3.4 0 0 1 0 6.4M17.6 15.4c2.1.4 3.4 1.9 3.9 4.6"/></svg></div>
+                <div><h4 style="margin:0">Who can help you apply</h4><p>All of these are free</p></div>
+              </div>
+              <ul class="bullet-check">
+                <li><strong>ASHA worker</strong> — pregnancy registration and maternity schemes.</li>
+                <li><strong>Anganwadi worker</strong> — nutrition, maternity benefit and the MCP card.</li>
+                <li><strong>Common Service Centre (CSC)</strong> — online forms for a small official fee.</li>
+                <li><strong>Hospital help desk</strong> — Ayushman and free-treatment counters.</li>
+              </ul>
+              <a class="btn btn-secondary btn-sm" href="healthcare.html" style="margin-top:.75rem">Find your nearest centre</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fraud -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Stay alert</span>
+          <h2>Protect yourself from scheme fraud</h2>
+          <p>Women are often targeted by people who charge for free forms, or ask for documents “for processing”.</p>
+        </div>
+
+        <div class="grid-2 keep" style="align-items:start">
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge danger"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 15 6-6M9.6 9.6h.01M14.4 14.4h.01"/></svg></div>
+              <div><h4 style="margin:0">Warning signs</h4><p>Walk away and tell someone</p></div>
+            </div>
+            <ul class="flag-list">
+              <li>Someone asks for cash, a “file charge” or a commission to apply.</li>
+              <li>A person offers to keep your original Aadhaar or ration card.</li>
+              <li>You are asked for an OTP, ATM PIN or bank password.</li>
+              <li>The website does not end in <strong>.gov.in</strong> or <strong>.nic.in</strong>.</li>
+              <li>Someone promises money “today” without any form or receipt.</li>
+            </ul>
+            <p class="flag-action">Call 181 (women's helpline) or tell your ASHA worker.</p>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-head">
+              <div class="icon-badge teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+              <div><h4 style="margin:0">Safe habits</h4><p>Small steps that protect you</p></div>
+            </div>
+            <ul class="bullet-check">
+              <li>Apply in person at a government office, or on the official website only.</li>
+              <li>Keep a photo of every form and receipt on your phone.</li>
+              <li>Write down the application number and the date you applied.</li>
+              <li>Ask for the name and designation of the person who helped you.</li>
+              <li>Use the free 104 helpline if you are unsure whether a scheme is real.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout info" style="margin-top:1.5rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong>Not finding your scheme?</strong> Many state and district programmes are not listed here.
+            Ask at the district health office, the zilla panchayat, or your local MLA/ward office — and check the
+            state health department website.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h3 style="margin-bottom:.4rem">Need help understanding a scheme?</h3>
+            <p class="small" style="margin:0;max-width:54ch">The health assistant can explain what a scheme covers in
+              simple words, and help you prepare questions for the hospital counter.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="healthcare.html">Nearby healthcare</a>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:70ch">JIVIKA AROGYA lists schemes for information only
+          and cannot apply on your behalf or confirm your eligibility. Always verify details with the official
+          government office before travelling or paying for any service.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/schemes.js" defer></script>
+</body>
+</html>

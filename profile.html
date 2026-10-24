@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile &amp; Privacy — JIVIKA AROGYA</title>
+  <meta name="description" content="Control what JIVIKA AROGYA remembers: choose what is saved, export a private copy of your records, delete health data or everything, and change language and display settings.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="profile">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span>Profile &amp; Privacy</span>
+            </div>
+            <h1 data-i18n="page.profile">Profile &amp; Privacy</h1>
+            <p class="lede">Everything JIVIKA remembers about you is kept in this browser — not on a server.
+              Change your details, choose what is saved, take a copy, or delete it all in one tap.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#dataCard">What is stored</a>
+            <button class="btn btn-primary" type="button" id="exportHero">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M7.5 10.5 12 15l4.5-4.5M4.5 20.5h15"/></svg>
+              Export a copy
+            </button>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+
+        <div class="privacy-facts">
+          <div class="privacy-fact"><span class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></span>Stays on your device</div>
+          <div class="privacy-fact"><span class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.9-3.7 3.9-5.7 7.5-5.7s6.6 2 7.5 5.7"/></svg></span>No account or password</div>
+          <div class="privacy-fact"><span class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg></span>You choose what to save</div>
+          <div class="privacy-fact"><span class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.9 13h9.2l.9-13"/><path d="M10.5 11v5M13.5 11v5"/></svg></span>Delete it anytime</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="dash-grid">
+          <div class="stack">
+            <!-- Details -->
+            <div class="card card-pad card-lg" id="detailsCard">
+              <div class="card-head">
+                <div class="icon-badge">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.9-3.7 3.9-5.7 7.5-5.7s6.6 2 7.5 5.7"/></svg>
+                </div>
+                <div>
+                  <h2 style="margin:0;font-size:1.25rem">Your details</h2>
+                  <p>Used only to personalise your dashboard and food suggestions</p>
+                </div>
+              </div>
+
+              <div class="profile-avatar" style="margin-bottom:1.15rem">
+                <span class="avatar" id="pAvatar" aria-hidden="true"></span>
+                <div>
+                  <strong id="pGreeting" style="font-family:var(--font-head);font-size:1.1rem">Hello</strong>
+                  <div class="tiny muted">Every field is optional. You can leave them all empty.</div>
+                </div>
+              </div>
+
+              <form id="profileForm" novalidate>
+                <div class="field">
+                  <label for="pName">Name or nickname</label>
+                  <input class="input" id="pName" name="name" type="text" maxlength="40"
+                    autocomplete="given-name" placeholder="For example, Lakshmi">
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="pAge">Age group</label>
+                    <select class="select" id="pAge"></select>
+                  </div>
+                  <div class="field">
+                    <label for="pStage">Life stage</label>
+                    <select class="select" id="pStage"></select>
+                    <span class="help">Sets the nutrition plan you see.</span>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="pDiet">Food preference</label>
+                    <select class="select" id="pDiet"></select>
+                  </div>
+                  <div class="field">
+                    <label for="pState">State or region</label>
+                    <select class="select" id="pState"></select>
+                    <span class="help">Helps show schemes that may apply to you.</span>
+                  </div>
+                </div>
+                <div class="row-between" style="gap:.75rem">
+                  <p class="tiny muted" style="margin:0;max-width:36ch">Saved in this browser only. JIVIKA never asks for
+                    Aadhaar, an OTP, money or a password.</p>
+                  <div class="row" style="gap:.5rem">
+                    <button class="btn btn-ghost btn-sm" type="button" id="resetFields">Reset fields</button>
+                    <button class="btn btn-primary" type="submit" id="saveProfile">Save details</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Consent (rendered by profile.js) -->
+            <div class="card card-pad card-lg" id="consentCard"></div>
+
+            <!-- Data summary (rendered by profile.js) -->
+            <div class="card card-pad card-lg" id="dataCard" style="scroll-margin-top:84px"></div>
+          </div>
+
+          <div class="stack">
+            <!-- Language and display (rendered by profile.js) -->
+            <div class="card card-pad card-lg" id="a11yCard"></div>
+
+            <div class="card card-pad card-lg">
+              <div class="card-head">
+                <div class="icon-badge teal">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg>
+                </div>
+                <div>
+                  <h3 style="margin:0">Private by design</h3>
+                  <p>What this website does with your information</p>
+                </div>
+              </div>
+              <ul class="bullet-check">
+                <li>Health entries stay in this browser. There is no server that receives them.</li>
+                <li>Every health article opens without an account, a phone number or an email.</li>
+                <li>No advertising, no tracking pixels and no selling of personal information.</li>
+                <li>No diagnosis and no medicine names — only education, and a push to a real doctor.</li>
+              </ul>
+            </div>
+
+            <div class="card card-pad card-lg">
+              <div class="card-head">
+                <div class="icon-badge amber">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>
+                </div>
+                <div>
+                  <h3 style="margin:0">On a shared phone</h3>
+                  <p>Practical steps that take under a minute</p>
+                </div>
+              </div>
+              <div class="list">
+                <div class="list-item">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>
+                  <div><strong>Lock the phone first</strong>
+                    <p class="muted">Your screen lock is the real password. Anyone who can unlock the phone can open this browser.</p></div>
+                </div>
+                <div class="list-item">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                  <div><strong>Use a private window</strong>
+                    <p class="muted">In private or incognito mode everything is forgotten when you close it. Export a copy first if you want to keep records.</p></div>
+                </div>
+                <div class="list-item">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.9 13h9.2l.9-13"/><path d="M10.5 11v5M13.5 11v5"/></svg>
+                  <div><strong>Delete before handing it over</strong>
+                    <p class="muted">One button in “What is stored on this device” removes health records without touching anything else.</p></div>
+                </div>
+                <div class="list-item">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+                  <div><strong>Watch out for fraud</strong>
+                    <p class="muted">JIVIKA never calls or messages to ask for an Aadhaar number, an OTP, money or medicine orders.
+                      That kind of call is a scam — report it on <a href="tel:181">181</a>.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rights">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">You are in control</span>
+          <h2 style="margin-bottom:.5rem">Your rights over your health information</h2>
+          <p class="lede">No forms, no waiting rooms and no permission needed. These rights work the same on a village
+            phone and in a city apartment.</p>
+        </div>
+        <div class="grid-auto">
+          <div class="card card-pad">
+            <div class="icon-badge sm teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m8.4 12.2 2.6 2.6 4.6-5"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">Consent comes first</h4>
+            <p class="small muted" style="margin:0">Nothing health-related is saved until you choose. You can change your mind on this page at any time.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge sm lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5Z"/><path d="M14 3.5v5h5"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">See what is stored</h4>
+            <p class="small muted" style="margin:0">The card above lists every record kept in this browser, with counts and the space it uses.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M7.5 10.5 12 15l4.5-4.5M4.5 20.5h15"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">Take a copy</h4>
+            <p class="small muted" style="margin:0">Export everything as a JSON file you can keep, print or show a doctor — even after deleting it here.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge sm teal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 4.5 19.5 7.5 8.5 18.5H5.5v-3Z"/><path d="M14 7 17 10"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">Correct your details</h4>
+            <p class="small muted" style="margin:0">Change your name, age group, life stage, food preference or state whenever something changes.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge sm amber"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.9 13h9.2l.9-13"/><path d="M10.5 11v5M13.5 11v5"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">Delete without asking</h4>
+            <p class="small muted" style="margin:0">Remove health records alone, or everything, in one step. Nothing is sent to us for approval.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="icon-badge sm lav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></div>
+            <h4 style="margin:.7rem 0 .3rem">Ask a real person</h4>
+            <p class="small muted" style="margin:0">Health advice on <a href="tel:104">104</a>, women's helpline <a href="tel:181">181</a>,
+              mental health <a href="tel:14416">14416</a>, emergency <a href="tel:108">108</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h3 style="margin-bottom:.4rem">Not sure how much to share?</h3>
+            <p class="small" style="margin:0;max-width:54ch">Every health page works without an account. Save only what
+              helps you — a cycle date is useful; a name is optional.</p>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-primary" href="assistant.html">Ask the assistant</a>
+            <a class="btn btn-secondary" href="healthcare.html">Nearby healthcare</a>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1.25rem;max-width:74ch">JIVIKA AROGYA is an education tool, not a medical
+          record system. Keep prescriptions, test reports and immunisation cards in their original form. This page cannot
+          confirm who else has used this browser or restore data that was deleted.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-health.js" defer></script>
+  <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/profile.js" defer></script>
+</body>
+</html>
