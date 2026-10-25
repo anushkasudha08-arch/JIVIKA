@@ -9,6 +9,16 @@
   const esc = JV.esc;
   let tipOffset = 0;
 
+  function tr(key, fallback) {
+    const value = JV.i18n.t(key);
+    return value === key ? fallback : value;
+  }
+
+  function pvStatusText(id) {
+    const meta = JV.preventive ? JV.preventive.statusMeta(id) : { label: id };
+    return tr("pv.st." + id, meta.label);
+  }
+
   function today() { return JV.toISO(new Date()); }
 
   function waterData() {
@@ -266,10 +276,84 @@
     });
   }
 
+  function renderPreventive() {
+    const host = document.getElementById("preventiveCard");
+    if (!host) return;
+    const P = JV.preventive;
+    if (!P) { host.hidden = true; return; }
+    const s = P.summary(Store.get("preventive", null));
+    const sessionOnly = Store.profile().consent.store === false;
+    const age = s.ageGroup
+      ? tr("pv.age." + (s.ageGroup.id === "60-plus" ? "60" : s.ageGroup.id), s.ageGroup.title)
+      : "";
+
+    let html = '<div class="card-head"><div class="icon-badge lav">' + icon("shield-check") + "</div>" +
+      '<div><h4 style="margin:0">' + esc(tr("pv.dashTitle", "My Preventive Health Plan")) + "</h4>" +
+      "<p>" + esc(tr("pv.dashSub", "Age-wise screening, appointments and follow-ups")) + "</p></div>" +
+      '<a class="btn btn-ghost btn-sm" href="preventive.html" style="margin-left:auto">' +
+      esc(tr("pv.viewPlan", "Open my plan")) + " " + icon("arrow-right") + "</a></div>";
+
+    if (!s.hasState) {
+      html += '<div class="pv-empty" style="margin-top:.6rem">' +
+        esc(tr("pv.dashEmpty", "No checklist yet. It is optional, needs no account, and your answers stay on this device.")) + "</div>" +
+        '<div class="pv-dash-foot">' +
+        '<a class="btn btn-primary btn-sm" href="preventive.html#pvWizard">' + icon("shield-check") + " " +
+        esc(tr("pv.start", "Start the checklist")) + "</a>" +
+        '<a class="btn btn-secondary btn-sm" href="preventive.html#pvLibrary">' + icon("book") + " " +
+        esc(tr("pv.library", "Screening library")) + "</a></div>";
+      host.innerHTML = html;
+      return;
+    }
+
+    html += '<div class="pv-dash-stats">' +
+      '<div class="pv-dash-stat due"><b>' + (s.counts["not-reviewed"] || 0) + "</b><span>" + esc(pvStatusText("not-reviewed")) + "</span></div>" +
+      '<div class="pv-dash-stat discuss"><b>' + s.counts.discuss + "</b><span>" + esc(pvStatusText("discuss")) + "</span></div>" +
+      '<div class="pv-dash-stat scheduled"><b>' + s.counts.scheduled + "</b><span>" + esc(pvStatusText("scheduled")) + "</span></div>" +
+      '<div class="pv-dash-stat"><b>' + s.counts.completed + "</b><span>" + esc(pvStatusText("completed")) + "</span></div></div>";
+
+    html += '<p class="tiny muted" style="margin:0 0 .35rem">' + esc(tr("pv.ageGroup", "Age group")) +
+      ": <strong>" + esc(age || tr("pv.general", "Not set")) + "</strong>" +
+      (sessionOnly ? ' · <span style="color:var(--amber-ink)">' + esc(JV.i18n.t("pv.sessionOnly")) + "</span>" : "") + "</p>";
+
+    if (s.items.length) {
+      html += '<div class="pv-dash-list">' + s.items.slice(0, 4).map(function (item) {
+        const tone = item.status === "completed" ? "teal" : item.status === "scheduled" ? "lavender" :
+          item.status === "discuss" ? "amber" : "neutral";
+        return '<div class="pv-dash-row"><span>' + esc(item.name) + "</span>" +
+          '<span class="badge ' + tone + '">' + esc(pvStatusText(item.status)) + "</span></div>";
+      }).join("") + "</div>";
+      if (s.items.length > 4) {
+        html += '<p class="tiny muted" style="margin:.1rem 0 0">+' + (s.items.length - 4) + "</p>";
+      }
+    } else {
+      html += '<div class="pv-empty">' + esc(tr("pv.planEmpty", "No plan yet. Add screenings from your results.")) + "</div>";
+    }
+
+    if (s.upcoming.length) {
+      const next = s.upcoming[0];
+      html += '<div class="callout info" style="margin:.6rem 0 0">' + icon("calendar") +
+        "<p><strong>" + esc(tr("pv.upcoming", "Upcoming appointment")) + ":</strong> " + esc(next.name) + " · " +
+        esc(JV.fmtDate(next.date, { day: "numeric", month: "short" })) + "</p></div>";
+    }
+    if (s.reminders.length) {
+      html += '<p class="tiny muted" style="margin:.45rem 0 0">' + icon("bell") + " " + s.reminders.length + " " +
+        esc(tr("pv.reminders", "Reminders")) + (s.remindersEnabled ? "" : " (" + esc(JV.i18n.t("pv.remindersOff")) + ")") + "</p>";
+    }
+
+    html += '<div class="pv-dash-foot">' +
+      '<a class="btn btn-primary btn-sm" href="preventive.html#pvPlan">' + icon("calendar") + " " +
+      esc(tr("pv.viewPlan", "Open my plan")) + "</a>" +
+      '<a class="btn btn-secondary btn-sm" href="preventive.html#pvCare">' + icon("pin") + " " +
+      esc(tr("pv.findCare", "Find screening near you")) + "</a>" +
+      '<a class="btn btn-ghost btn-sm" href="preventive.html#pvWarnings">' + icon("alert") + " " +
+      esc(tr("pv.warning", "Early warning signs")) + "</a></div>";
+    host.innerHTML = html;
+  }
+
   function renderQuick() {
     const host = document.getElementById("quickGrid");
     if (!host) return;
-    const ids = ["menstrual", "physical", "mental", "nutrition", "healthcare", "schemes", "assistant", "profile"];
+    const ids = ["preventive", "menstrual", "physical", "mental", "nutrition", "healthcare", "schemes", "assistant", "profile"];
     host.innerHTML = JV.NAV.filter(function (n) { return ids.indexOf(n.id) !== -1; }).map(function (n) {
       return '<a class="quick-link" href="' + n.href + '">' + icon(n.icon) + "<span>" + esc(JV.i18n.t(n.key)) + "</span></a>";
     }).join("");
@@ -280,6 +364,7 @@
     renderWelcome(pred);
     renderOverview(pred);
     renderCycle(pred);
+    renderPreventive();
     renderMood();
     renderWater();
     renderReminders(pred);

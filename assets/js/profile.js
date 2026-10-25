@@ -231,6 +231,8 @@
     const messages = assistant && Array.isArray(assistant.messages) ? assistant.messages.length : 0;
     const nutrition = Store.get("nutrition", null);
     const stage = nutrition ? chosen(W.STAGES, nutrition.stage) : null;
+    const preventive = Store.get("preventive", null);
+    const pvItems = preventive && preventive.plan ? Object.keys(preventive.plan).length : 0;
     const bytes = Store.bytes();
     const kb = bytes / 1024;
     const size = bytes ? (kb >= 0.1 ? kb.toFixed(1) + " KB" : "under 0.1 KB") : "nothing";
@@ -260,6 +262,9 @@
       dataRow("shield", "lav", "Schemes & checklist",
         "Applications marked and preparation steps ticked",
         (schemes.length + checklist.length) ? (schemes.length + checklist.length) + " items" : "") +
+      dataRow("shield-check", "teal", "Preventive screening plan",
+        "Age group, screening statuses and reminders — no test results",
+        pvItems ? pvItems + (pvItems === 1 ? " item" : " items") : "") +
       '<div class="data-foot">' + icon("file") + "<span>Total in this browser: <strong>" + esc(size) + "</strong>" +
       (started ? " · started " + esc(started) : "") + "</span></div>" +
       '<div class="row" style="gap:.5rem;margin-top:.9rem">' +
@@ -303,7 +308,8 @@
       assistant: Store.get("assistant", null),
       nutrition: Store.get("nutrition", null),
       schemes: listOf("schemes"),
-      checklist: listOf("checklist")
+      checklist: listOf("checklist"),
+      preventive: Store.get("preventive", null)
     };
     JV.download("jivika-arogya-data-" + JV.toISO(new Date()) + ".json", JSON.stringify(payload, null, 2));
     JV.toast("A private copy was downloaded — keep the file safe");
@@ -312,7 +318,7 @@
   function deleteHealth() {
     JV.confirm({
       title: "Delete health records?",
-      message: "This removes cycle dates, symptoms, moods, journal notes, water, saved schemes, the checklist, your nutrition plan and the assistant conversation from this browser. Your name and display settings stay. It cannot be undone.",
+      message: "This removes cycle dates, symptoms, moods, journal notes, water, saved schemes, the checklist, your preventive screening plan, your nutrition plan and the assistant conversation from this browser. Your name and display settings stay. It cannot be undone.",
       confirm: "Delete health records",
       cancel: "Keep records",
       danger: true

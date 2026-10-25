@@ -11,7 +11,7 @@
   const $ = function (sel, root) { return (root || document).querySelector(sel); };
   const $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
-  const HEALTH_KEYS = ["cycle", "moods", "journal", "selfcare", "water", "schemes", "checklist", "moodNotes"];
+  const HEALTH_KEYS = ["cycle", "moods", "journal", "selfcare", "water", "schemes", "checklist", "moodNotes", "preventive"];
 
   const PROFILE_DEFAULTS = {
     name: "",
@@ -197,6 +197,7 @@
   const NAV = [
     { id: "home", href: "index.html", key: "nav.home", icon: "home" },
     { id: "dashboard", href: "dashboard.html", key: "nav.dashboard", icon: "grid" },
+    { id: "preventive", href: "preventive.html", key: "nav.preventive", icon: "shield-check" },
     { id: "menstrual", href: "menstrual.html", key: "nav.menstrual", icon: "droplet" },
     { id: "physical", href: "physical.html", key: "nav.physical", icon: "heart-pulse" },
     { id: "mental", href: "mental.html", key: "nav.mental", icon: "sparkle" },
@@ -206,7 +207,7 @@
     { id: "assistant", href: "assistant.html", key: "nav.assistant", icon: "chat" },
     { id: "profile", href: "profile.html", key: "nav.profile", icon: "user" }
   ];
-  const PRIMARY = ["dashboard", "menstrual", "physical", "mental", "assistant"];
+  const PRIMARY = ["dashboard", "preventive", "menstrual", "physical", "mental", "assistant"];
   const OPTIONAL = [];
   const TABS = ["home", "menstrual", "assistant", "mental", "profile"];
 
@@ -347,9 +348,12 @@
   function renderFooter() {
     const host = document.getElementById("site-footer");
     if (!host) return;
-    const col1 = NAV.slice(1, 5);
-    const col2 = NAV.slice(5, 8);
-    const col3 = [NAV[8], NAV[9], NAV[0]];
+    const navById = {};
+    NAV.forEach(function (n) { navById[n.id] = n; });
+    function pick(ids) { return ids.map(function (id) { return navById[id]; }).filter(Boolean); }
+    const col1 = pick(["dashboard", "preventive", "menstrual", "physical", "mental"]);
+    const col2 = pick(["nutrition", "healthcare", "schemes"]);
+    const col3 = pick(["assistant", "profile", "home"]);
     function link(n) {
       return '<a href="' + n.href + '" data-i18n="' + n.key + '">' + JV.i18n.t(n.key) + "</a>";
     }
@@ -456,7 +460,7 @@
   /* ---------- consent bar ---------- */
   function maybeShowConsent() {
     const page = currentPage();
-    if (["dashboard", "menstrual", "mental"].indexOf(page) === -1) return;
+    if (["dashboard", "preventive", "menstrual", "mental"].indexOf(page) === -1) return;
     const profile = Store.profile();
     if (profile.consent.store !== null) return;
     if (sessionStorage.getItem("jivika.consentDismissed") === "1") return;

@@ -18,16 +18,18 @@
     { id: "hospital", label: "Hospital" },
     { id: "clinic", label: "Clinic" },
     { id: "doctors", label: "Doctor" },
-    { id: "pharmacy", label: "Pharmacy" }
+    { id: "pharmacy", label: "Pharmacy" },
+    { id: "lab", label: "Laboratory" }
   ];
   const TYPE_META = {
     hospital: { label: "Hospital", icon: "hospital", tone: "teal" },
     clinic: { label: "Clinic", icon: "stethoscope", tone: "lav" },
     doctors: { label: "Doctor / clinic", icon: "stethoscope", tone: "lav" },
-    pharmacy: { label: "Pharmacy", icon: "pill", tone: "amber" }
+    pharmacy: { label: "Pharmacy", icon: "pill", tone: "amber" },
+    lab: { label: "Laboratory", icon: "lab", tone: "pink" }
   };
 
-  const state = { lat: null, lon: null, label: "", type: "all", radius: 5, busy: false, failed: false };
+  const state = { lat: null, lon: null, label: "", type: "all", radius: 5, busy: false, failed: false, govOnly: false };
   let allResults = [];
 
   const $ = function (id) { return document.getElementById(id); };
@@ -130,13 +132,13 @@
     state.busy = true;
     setStatus("Searching within " + state.radius + " km…");
 
-    const sel = '["amenity"~"^(hospital|clinic|doctors|pharmacy)$"]';
     const around = "(around:" + state.radius * 1000 + "," + state.lat.toFixed(5) + "," + state.lon.toFixed(5) + ")";
-    const query = "[out:json][timeout:20];(" +
-      "node" + sel + around + ";" +
-      "way" + sel + around + ";" +
-      "relation" + sel + around + ";" +
-      ");out center 80;";
+    const selectors = ['["amenity"~"^(hospital|clinic|doctors|pharmacy)$"]', '["healthcare"="laboratory"]'];
+    let body = "";
+    selectors.forEach(function (sel) {
+      body += "node" + sel + around + ";way" + sel + around + ";relation" + sel + around + ";";
+    });
+    const query = "[out:json][timeout:20];(" + body + ");out center 100;";
 
     overpass(query).then(function (data) {
       state.busy = false;
@@ -148,7 +150,10 @@
         const lon = el.lon !== undefined ? el.lon : (el.center ? el.center.lon : null);
         if (lat === null || lon === null) return null;
         if (!tags.name && !tags["name:en"]) return null;
-        const amenity = tags.amenity || "clinic";
+        const amenity = tags.amenity || (tags.healthcare === "laboratory" ? "lab" : "clinic");
+        const ownership = String(tags["operator:type"] || "").toLowerCase();
+        const gov = ownership === "government" || ownership === "public" ||
+          /government|govt\.?|public health|state health|district health|national health/i.test(String(tags.operator || ""));
         return {
           id: el.type + "/" + el.id,
           name: tags["name:en"] || tags.name,
@@ -159,6 +164,7 @@
           website: tags.website || tags["contact:website"] || "",
           hours: tags.opening_hours || "",
           emergency: tags.emergency === "yes",
+          gov: gov,
           address: (tags["addr:full"] ||
             [tags["addr:housenumber"], tags["addr:street"], tags["addr:city"]].filter(Boolean).join(", ")),
           distance: haversine(state.lat, state.lon, lat, lon)
@@ -194,7 +200,8 @@
     return '<article class="facility">' +
       '<div class="icon-badge ' + meta.tone + ' sm">' + icon(meta.icon) + "</div>" +
       '<div style="flex:1;min-width:0">' +
-        '<h4>' + esc(f.name) + (f.emergency ? ' <span class="badge danger">Emergency</span>' : "") + "</h4>" +
+        '<h4>' + esc(f.name) + (f.emergency ? ' <span class="badge danger">Emergency</span>' : "") +
+          (f.gov ? ' <span class="badge teal" title="Ownership tag in OpenStreetMap — not verified">Government-tagged</span>' : "") + "</h4>" +
         '<p>' + meta.label + (f.address ? " · " + esc(f.address) : "") + "</p>" +
         (f.hours ? '<p class="tiny muted" style="margin-top:.2rem">Hours: ' + esc(f.hours) + "</p>" : "") +
         '<div class="f-actions">' +
@@ -215,7 +222,9 @@
     if (!list) return;
 
     const rows = allResults.filter(function (f) {
-      return state.type === "all" || f.amenity === state.type;
+      if (state.type !== "all" && f.amenity !== state.type) return false;
+      if (state.govOnly && !f.gov) return false;
+      return true;
     }).sort(function (a, b) { return a.distance - b.distance; }).slice(0, 40);
 
     if (!state.label) {
@@ -227,7 +236,8 @@
 
     if (count) {
       count.textContent = rows.length
-        ? rows.length + (rows.length === 1 ? " place" : " places") + " listed, nearest first"
+        ? rows.length + (rows.length === 1 ? " place" : " places") + " listed, nearest first" +
+          (state.govOnly ? " · government-tagged only" : "")
         : "";
     }
 
@@ -242,11 +252,13 @@
     }
 
     if (!rows.length) {
-      list.innerHTML = JV.ui.emptyState("pin", allResults.length ? "Nothing of this type nearby" :
-        "No facilities mapped here",
-        allResults.length
-          ? "Try “Everything”, or increase the distance you can travel."
-          : "Village sub-centres and small clinics are often missing from the map. Call 104 or ask your ASHA worker — or open Google Maps.") +
+      list.innerHTML = JV.ui.emptyState("pin", state.govOnly ? "No government-tagged place nearby" :
+        allResults.length ? "Nothing of this type nearby" : "No facilities mapped here",
+        state.govOnly
+          ? "OpenStreetMap rarely records who runs a facility. Turn off the ownership filter, call 104, or ask your ASHA worker for the nearest public hospital or PHC."
+          : allResults.length
+            ? "Try “Everything”, or increase the distance you can travel."
+            : "Village sub-centres and small clinics are often missing from the map. Call 104 or ask your ASHA worker — or open Google Maps.") +
         '<div class="row" style="justify-content:center;gap:.5rem">' +
           '<a class="btn btn-secondary btn-sm" href="tel:104">Call 104</a>' +
           '<a class="btn btn-secondary btn-sm" id="mapsEmpty" href="' + mapsHref() + '" target="_blank" rel="noopener">Open Google Maps</a>' +
@@ -317,6 +329,13 @@
 
   /* ---------- init ---------- */
   function init() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get("type");
+      if (TYPES.some(function (t) { return t.id === type; })) state.type = type;
+      const gov = params.get("gov");
+      state.govOnly = gov === "1" || gov === "true";
+    } catch (e) { /* no URL API — keep defaults */ }
     renderHelplines();
     syncMapsLink();
     renderResults();
@@ -330,6 +349,14 @@
 
     makeChips("typeChips", TYPES, state.type, "data-type", function (v) {
       state.type = v;
+      renderResults();
+    });
+
+    makeChips("ownChips", [
+      { id: "all", label: "All ownership" },
+      { id: "gov", label: "Government-tagged" }
+    ], state.govOnly ? "gov" : "all", "data-own", function (v) {
+      state.govOnly = v === "gov";
       renderResults();
     });
 

@@ -48,6 +48,7 @@
     book: '<path d="M12 6.5C10.5 5 8 4.5 4.5 4.5v13c3.5 0 6 .5 7.5 2 1.5-1.5 4-2 7.5-2v-13c-3.5 0-6 .5-7.5 2Z"/><path d="M12 6.5v13"/>',
     pill: '<rect x="3.2" y="9" width="17.6" height="6.4" rx="3.2" transform="rotate(-45 12 12)"/><path d="M9.2 8.2 15.8 14.8"/>',
     hospital: '<rect x="4" y="6.5" width="16" height="14" rx="2.5"/><path d="M9.5 20.5V16h5v4.5"/><path d="M12 9v4M10 11h4M12 6.5v-3"/>',
+    lab: '<path d="M9 3.5h6M10.5 3.5v5L5.8 17a2.5 2.5 0 0 0 2.2 3.5h8a2.5 2.5 0 0 0 2.2-3.5L13.5 8.5v-5"/><path d="M7.5 14h9"/>',
     clock: '<circle cx="12" cy="12" r="8.6"/><path d="M12 7.5V12l3 2"/>',
     stethoscope: '<path d="M6 3.5v5a5 5 0 0 0 10 0v-5"/><path d="M11 13.5V16a4 4 0 0 0 8 0v-2"/><circle cx="19" cy="10.5" r="2.4"/>',
     utensils: '<path d="M7 3.5v7a2.5 2.5 0 0 0 5 0v-7"/><path d="M9.5 10.5v10"/><path d="M17.5 3.5c-1.5 1.5-2 3-2 4.5s.5 3 2 4.5v8"/>',

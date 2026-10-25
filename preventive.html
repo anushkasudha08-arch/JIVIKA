@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-text="md" data-contrast="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preventive Healthcare — JIVIKA AROGYA</title>
+  <meta name="description" content="Age-wise health screening and early disease detection for women: understand which assessments may be due, what to discuss with a clinician, and which symptoms need medical care. Educational only.">
+  <meta name="theme-color" content="#fff9f7">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/preventive.css">
+  <script>
+    (function () {
+      try {
+        var p = JSON.parse(localStorage.getItem("jivika.profile") || "{}").a11y || {};
+        var r = document.documentElement;
+        r.setAttribute("data-theme", p.theme || "light");
+        r.setAttribute("data-text", p.text || "md");
+        r.setAttribute("data-contrast", p.contrast || "normal");
+        var l = localStorage.getItem("jivika.lang");
+        if (l) r.setAttribute("lang", l === "tcy" ? "kn" : l);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+<body data-page="preventive">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-row">
+          <div>
+            <div class="crumbs">
+              <a href="index.html">Home</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <a href="dashboard.html" data-i18n="nav.dashboard">Dashboard</a>
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+              <span data-i18n="page.preventive">Preventive Healthcare</span>
+            </div>
+            <h1 data-i18n="pv.title">Age-Wise Health Screening &amp; Early Disease Detection</h1>
+            <p class="lede" data-i18n="pv.sub">Understand your health screening needs at every stage of life.</p>
+            <div class="pv-hero-badges">
+              <span class="badge teal" data-i18n="pv.badgeAges">Ages 10+</span>
+              <span class="badge lavender" data-i18n="pv.badgeLangs">8 languages</span>
+              <span class="badge neutral" data-i18n="pv.badgeNoAccount">No account needed</span>
+              <span class="badge amber" data-i18n="pv.pending">Clinical review pending</span>
+            </div>
+          </div>
+          <div class="row" style="flex:none">
+            <a class="btn btn-secondary" href="#pvLibrary" data-i18n="pv.browse">Browse by age</a>
+            <a class="btn btn-primary" href="#pvWizard" data-i18n="pv.start">Start the checklist</a>
+          </div>
+        </div>
+        <div id="langNote" style="margin-top:1rem"></div>
+        <div class="pv-review" role="note">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <div>
+            <strong>Educational draft — clinical and translation review pending.</strong>
+            <span>Eligibility, screening intervals and translations on this page must be reviewed by a qualified clinician before publication. This page does not diagnose illness, prescribe medicine, or confirm that anyone is healthy.</span>
+            <span id="pvClinicalNote" hidden data-i18n="pv.clinicalEnglish">Clinical detail is shown in English until a clinician reviews the translation.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="emergency-strip pv-emergency" role="alert">
+          <div class="icon-badge danger">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+          </div>
+          <div style="flex:1;min-width:220px">
+            <p><strong data-i18n="pv.emgStripTitle">Emergency? Do not use this checklist first.</strong> <span data-i18n="pv.emgStripBody">For severe chest pain, difficulty breathing, sudden weakness on one side, severe bleeding with fainting, or severe abdominal pain, call 108 or 112 now.</span></p>
+          </div>
+          <a class="btn btn-danger" href="tel:108"><span data-i18n="common.call">Call</span> 108</a>
+          <a class="btn btn-secondary" href="tel:112"><span data-i18n="common.call">Call</span> 112</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvAges">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Age-wise prevention</span>
+          <h2 data-i18n="pv.ageTitle">Choose your stage of life</h2>
+          <p>These cards are general education. Your personal checklist is built only after you answer the questions below — this tool never assumes every woman needs every test.</p>
+        </div>
+        <div class="pv-age-grid" id="pvAgeGrid"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvLibrary">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Structured screening library</span>
+          <h2 data-i18n="pv.library">Screening library</h2>
+          <p>Every assessment explains what it looks for, who it is for, how to prepare, and when to ask for help. Source years are guideline publication years — not sign-off dates for this site.</p>
+        </div>
+        <div class="pv-lib-toolbar">
+          <div class="chip-row" id="pvAgeFilter" role="group" aria-label="Filter screenings by age"></div>
+          <span class="badge amber" data-i18n="pv.pending">Clinical review pending</span>
+        </div>
+        <div class="pv-lib-grid" id="pvLibraryGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvWizard">
+      <div class="container">
+        <div class="card card-lg card-pad pv-wizard">
+          <div class="pv-wizard-head">
+            <div>
+              <span class="eyebrow" style="margin:0">Optional &amp; private</span>
+              <h2 data-i18n="pv.wizard">My personal screening checklist</h2>
+              <p class="small" data-i18n="pv.wizardIntro">Six short questions, about two minutes. Skip anything you do not want to answer — the education above stays open.</p>
+            </div>
+            <span class="badge lavender" id="pvVisitBadge">Not saved yet</span>
+          </div>
+          <div class="pv-progress" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Questionnaire progress">
+            <span id="pvProgressBar" style="width:16.6%"></span>
+          </div>
+          <div id="pvWizardBody">
+            <div class="pv-step" id="pvStepHost"></div>
+            <div class="pv-error" id="pvError" role="alert" hidden></div>
+            <div class="pv-nav" id="pvWizardNav"></div>
+          </div>
+          <div id="pvResults" hidden></div>
+          <div id="pvWizardFoot"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvPlan">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Consent-aware</span>
+          <h2 data-i18n="pv.plan">My preventive health plan</h2>
+          <p data-i18n="pv.planIntro">Statuses, appointments and reminders are yours to edit. Nothing is uploaded, and no follow-up date is created automatically.</p>
+        </div>
+        <div class="pv-plan-grid">
+          <div class="card card-pad" id="pvPlanCard">
+            <div id="pvPlanBody"></div>
+            <div id="pvConsentPanel"></div>
+            <div class="pv-plan-actions" id="pvPlanActions"></div>
+          </div>
+          <div class="card card-pad" id="pvReminderCard">
+            <div id="pvReminderBody"></div>
+          </div>
+        </div>
+        <p class="tiny muted" style="margin-top:1rem" data-i18n="pv.planNote">This plan lives only in this browser. It is not a medical record, and a clinician has not reviewed it. Do not enter test reports, prescriptions or other people's health information here.</p>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvWarnings">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Do not wait for a screening date</span>
+          <h2 data-i18n="pv.warning">Early warning signs</h2>
+          <p>These are reasons to see a health worker — not a diagnosis. If any sign is severe or sudden, use the emergency numbers above instead of this questionnaire.</p>
+        </div>
+        <div class="pv-warning-grid" id="pvWarningGrid"></div>
+        <div class="callout danger" style="margin-top:1.25rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3Z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p><strong data-i18n="pv.emergencyLine">Emergency: severe chest pain, difficulty breathing, sudden weakness or numbness on one side, face drooping, slurred speech, severe bleeding with fainting, or severe abdominal pain. Call 108 or 112 now.</strong></p>
+        </div>
+        <div class="pv-emergency-grid" id="pvEmergencyGrid"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="pvCare">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Affordable care</span>
+          <h2 data-i18n="pv.findCare">Find screening near you</h2>
+          <p>Search government hospitals, clinics and laboratories, or check which public programmes may cover the assessment. Facility details come from OpenStreetMap; services, government status and costs are not verified — always call before travelling.</p>
+        </div>
+        <div class="pv-care-grid">
+          <a class="pv-care-card" href="healthcare.html?type=hospital&amp;gov=1">
+            <span class="icon-badge teal sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6.5" width="16" height="14" rx="2.5"/><path d="M9.5 20.5V16h5v4.5"/><path d="M12 9v4M10 11h4M12 6.5v-3"/></svg></span>
+            <span><h4 data-i18n="pv.govt">Government hospitals and PHCs</h4><p>District hospitals, CHCs, PHCs and sub-centres where mapped. Call 104 for the nearest public facility.</p></span>
+          </a>
+          <a class="pv-care-card" href="healthcare.html?type=lab">
+            <span class="icon-badge lav sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6M10.5 3.5v5L5.8 17a2.5 2.5 0 0 0 2.2 3.5h8a2.5 2.5 0 0 0 2.2-3.5L13.5 8.5v-5"/><path d="M7.5 14h9"/></svg></span>
+            <span><h4 data-i18n="pv.labs">Diagnostic laboratories</h4><p>OpenStreetMap laboratory listings. Test availability and prices are not shown — confirm by phone.</p></span>
+          </a>
+          <a class="pv-care-card" href="schemes.html">
+            <span class="icon-badge amber sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19.5 6v6c0 4.8-3.3 8.3-7.5 9.2C7.8 20.3 4.5 16.8 4.5 12V6Z"/><path d="m9 12 2.2 2.2 4.2-4.3"/></svg></span>
+            <span><h4 data-i18n="pv.programmes">Government screening programmes</h4><p>Check the schemes page for national and state programmes. Eligibility varies — no scheme is promised here.</p></span>
+          </a>
+          <a class="pv-care-card" href="tel:104">
+            <span class="icon-badge sm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3.5h3l1.6 4-2.1 1.4a11.5 11.5 0 0 0 5.4 5.4l1.4-2.1 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2Z"/></svg></span>
+            <span><h4 data-i18n="pv.helplineTitle">Health helpline 104</h4><p data-i18n="pv.helplineText">Ask for the nearest government screening centre or ASHA worker in your language.</p></span>
+          </a>
+        </div>
+        <div class="pv-sources" id="pvSources"></div>
+        <div class="callout info" style="margin-top:1.25rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p data-i18n="pv.privacyNote"><strong>Privacy:</strong> education works without an account. Answers are saved only if you tick the save box, and they stay in this browser. A secure medical record needs a clinic-managed system with login, encryption, access control and audit logs — this static site cannot provide that.</p>
+        </div>
+        <div class="callout" style="margin-top:1rem">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
+          <p data-i18n="pv.disclaimer">This is health education, not a diagnosis. It cannot confirm that you are healthy or disease-free. Screening decisions depend on your history and a clinician's assessment.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <div id="site-tabbar"></div>
+  <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/i18n-preventive.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/data-preventive.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/preventive.js" defer></script>
+</body>
+</html>

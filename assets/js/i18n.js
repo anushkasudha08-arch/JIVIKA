@@ -28,10 +28,12 @@
       "home.cta1": "Open my dashboard", "home.cta2": "Talk to the assistant",
       "home.trust1": "Private by design", "home.trust2": "8 languages", "home.trust3": "Free to use",
       "home.quickTitle": "Everything you need, in one place",
-      "home.quickSub": "Ten simple tools. No complicated menus. Start with whatever you need today.",
+      "home.quickSub": "Simple tools. No complicated menus. Start with whatever you need today.",
       "home.langTitle": "Speak to us in the language you think in",
       "home.langSub": "Choose a language, then use the speaker-friendly font size buttons for easy reading.",
       "home.supportTitle": "If today feels heavy, you are not alone",
+      "home.privacyTitle": "Your body, your data",
+      "home.privacySub": "Nothing about your health leaves this device.",
 
       "dash.welcome": "Welcome back",
       "dash.sub": "Here is a gentle snapshot of your health today.",
@@ -75,10 +77,12 @@
       "home.cta1": "मेरा डैशबोर्ड खोलें", "home.cta2": "सहायक से बात करें",
       "home.trust1": "पूरी निजता", "home.trust2": "8 भाषाएँ", "home.trust3": "मुफ़्त",
       "home.quickTitle": "आपकी ज़रूरत की हर चीज़, एक जगह",
-      "home.quickSub": "दस आसान साधन। कोई उलझा हुआ मेन्यू नहीं। आज जो चाहिए, वहीं से शुरू करें।",
+      "home.quickSub": "आसान साधन। कोई उलझा हुआ मेन्यू नहीं। आज जो चाहिए, वहीं से शुरू करें।",
       "home.langTitle": "उसी भाषा में बात करें जिसमें आप सोचती हैं",
       "home.langSub": "भाषा चुनें, फिर आसान पढ़ने के लिए अक्षरों का आकार बड़ा करें।",
       "home.supportTitle": "अगर आज मन भारी है, तो आप अकेली नहीं हैं",
+      "home.privacyTitle": "आपका शरीर, आपका डेटा",
+      "home.privacySub": "आपकी सेहत से जुड़ी कोई भी जानकारी इस डिवाइस से बाहर नहीं जाती।",
 
       "dash.welcome": "फिर से स्वागत है",
       "dash.sub": "आज आपकी सेहत की एक छोटी तस्वीर।",
@@ -122,10 +126,12 @@
       "home.cta1": "ನನ್ನ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ತೆರೆಯಿರಿ", "home.cta2": "ಸಹಾಯಕನೊಂದಿಗೆ ಮಾತನಾಡಿ",
       "home.trust1": "ಖಾಸಗಿತನಕ್ಕೆ ಆದ್ಯತೆ", "home.trust2": "8 ಭಾಷೆಗಳು", "home.trust3": "ಉಚಿತ",
       "home.quickTitle": "ನಿಮಗೆ ಬೇಕಾದ ಎಲ್ಲವೂ ಒಂದೇ ಜಾಗದಲ್ಲಿ",
-      "home.quickSub": "ಹತ್ತು ಸರಳ ಸಾಧನಗಳು. ಗೊಂದಲದ ಮೆನು ಇಲ್ಲ. ಇಂದು ಬೇಕಾದದ್ದರಿಂದ ಆರಂಭಿಸಿ.",
+      "home.quickSub": "ಸರಳ ಸಾಧನಗಳು. ಗೊಂದಲದ ಮೆನು ಇಲ್ಲ. ಇಂದು ಬೇಕಾದದ್ದರಿಂದ ಆರಂಭಿಸಿ.",
       "home.langTitle": "ನೀವು ಯೋಚಿಸುವ ಭಾಷೆಯಲ್ಲೇ ಮಾತನಾಡಿ",
       "home.langSub": "ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ, ನಂತರ ಓದಲು ಸುಲಭವಾಗಲು ಅಕ್ಷರ ಗಾತ್ರವನ್ನು ಹೆಚ್ಚಿಸಿ.",
       "home.supportTitle": "ಇಂದು ಮನಸ್ಸು ಭಾರವಾಗಿದ್ದರೆ, ನೀವು ಒಂಟಿಯಲ್ಲ",
+      "home.privacyTitle": "ನಿಮ್ಮ ದೇಹ, ನಿಮ್ಮ ಡೇಟಾ",
+      "home.privacySub": "ನಿಮ್ಮ ಆರೋಗ್ಯದ ಯಾವುದೇ ಮಾಹಿತಿ ಈ ಸಾಧನದಿಂದ ಹೊರಗೆ ಹೋಗುವುದಿಲ್ಲ.",
 
       "dash.welcome": "ಮತ್ತೆ ಸ್ವಾಗತ",
       "dash.sub": "ಇಂದು ನಿಮ್ಮ ಆರೋಗ್ಯದ ಒಂದು ಸಣ್ಣ ಚಿತ್ರ.",
@@ -169,10 +175,12 @@
       "home.cta1": "என் டாஷ்போர்டைத் திற", "home.cta2": "உதவியாளரிடம் பேசு",
       "home.trust1": "தனியுரிமை பாதுகாப்பு", "home.trust2": "8 மொழிகள்", "home.trust3": "இலவசம்",
       "home.quickTitle": "உங்களுக்குத் தேவையான அனைத்தும் ஒரே இடத்தில்",
-      "home.quickSub": "பத்து எளிய கருவிகள். சிக்கலான பட்டிகள் இல்லை. இன்று தேவையானதில் தொடங்குங்கள்.",
+      "home.quickSub": "எளிய கருவிகள். சிக்கலான பட்டிகள் இல்லை. இன்று தேவையானதில் தொடங்குங்கள்.",
       "home.langTitle": "நீங்கள் நினைக்கும் மொழியிலேயே பேசுங்கள்",
       "home.langSub": "மொழியைத் தேர்ந்தெடுத்து, படிக்க எளிதாக எழுத்து அளவைப் பெரிதாக்குங்கள்.",
       "home.supportTitle": "இன்று மனம் கனமாக இருந்தால், நீங்கள் தனியில்லை",
+      "home.privacyTitle": "உங்கள் உடல், உங்கள் தரவு",
+      "home.privacySub": "உங்கள் உடல்நலம் குறித்த எந்தத் தகவலும் இந்தச் சாதனத்தை விட்டு வெளியே செல்லாது.",
 
       "dash.welcome": "மீண்டும் வருக",
       "dash.sub": "இன்று உங்கள் உடல்நலத்தின் ஒரு சிறு படம்.",
@@ -216,10 +224,12 @@
       "home.cta1": "నా డాష్‌బోర్డ్ తెరువు", "home.cta2": "సహాయకుడితో మాట్లాడు",
       "home.trust1": "గోప్యతకు ప్రాధాన్యం", "home.trust2": "8 భాషలు", "home.trust3": "ఉచితం",
       "home.quickTitle": "మీకు కావాల్సినవి అన్నీ ఒకే చోట",
-      "home.quickSub": "పది సులభ సాధనాలు. సంక్లిష్ట మెనూలు లేవు. ఈరోజు అవసరమైనదానితో ప్రారంభించండి.",
+      "home.quickSub": "సులభ సాధనాలు. సంక్లిష్ట మెనూలు లేవు. ఈరోజు అవసరమైనదానితో ప్రారంభించండి.",
       "home.langTitle": "మీరు ఆలోచించే భాషలోనే మాట్లాడండి",
       "home.langSub": "భాషను ఎంచుకోండి, చదవడం సులభంగా ఉండేందుకు అక్షర పరిమాణాన్ని పెంచండి.",
       "home.supportTitle": "ఈరోజు మనసు బరువుగా ఉంటే, మీరు ఒంటరి కాదు",
+      "home.privacyTitle": "మీ శరీరం, మీ డేటా",
+      "home.privacySub": "మీ ఆరోగ్యానికి సంబంధించిన ఏ సమాచారం ఈ పరికరం నుండి బయటికి వెళ్లదు.",
 
       "dash.welcome": "మళ్ళీ స్వాగతం",
       "dash.sub": "ఈరోజు మీ ఆరోగ్యం గురించి ఒక చిన్న చిత్రం.",
@@ -263,10 +273,12 @@
       "home.cta1": "എന്റെ ഡാഷ്ബോർഡ് തുറക്കുക", "home.cta2": "സഹായിയോട് സംസാരിക്കുക",
       "home.trust1": "സ്വകാര്യത ഉറപ്പ്", "home.trust2": "8 ഭാഷകൾ", "home.trust3": "സൗജന്യം",
       "home.quickTitle": "വേണ്ടതെല്ലാം ഒരിടത്ത്",
-      "home.quickSub": "പത്ത് ലളിത ഉപകരണങ്ങൾ. സങ്കീർണ്ണ മെനുവില്ല. ഇന്ന് ആവശ്യമുള്ളതിൽ തുടങ്ങുക.",
+      "home.quickSub": "ലളിത ഉപകരണങ്ങൾ. സങ്കീർണ്ണ മെനുവില്ല. ഇന്ന് ആവശ്യമുള്ളതിൽ തുടങ്ങുക.",
       "home.langTitle": "നിങ്ങൾ ചിന്തിക്കുന്ന ഭാഷയിൽ സംസാരിക്കുക",
       "home.langSub": "ഭാഷ തിരഞ്ഞെടുത്ത്, വായിക്കാൻ എളുപ്പത്തിന് അക്ഷരവലിപ്പം കൂട്ടുക.",
       "home.supportTitle": "ഇന്ന് മനസ്സ് ഭാരമുള്ളതാണെങ്കിൽ, നിങ്ങൾ ഒറ്റയ്ക്കല്ല",
+      "home.privacyTitle": "നിങ്ങളുടെ ശരീരം, നിങ്ങളുടെ ഡാറ്റ",
+      "home.privacySub": "നിങ്ങളുടെ ആരോഗ്യത്തെക്കുറിച്ചുള്ള ഒരു വിവരവും ഈ ഉപകരണത്തിൽ നിന്ന് പുറത്തുപോകുന്നില്ല.",
 
       "dash.welcome": "വീണ്ടും സ്വാഗതം",
       "dash.sub": "ഇന്നത്തെ ആരോഗ്യത്തിന്റെ ഒരു ചെറിയ ചിത്രം.",
@@ -310,10 +322,12 @@
       "home.cta1": "আমার ড্যাশবোর্ড খুলুন", "home.cta2": "সহায়কের সঙ্গে কথা বলুন",
       "home.trust1": "গোপনীয়তা সুরক্ষিত", "home.trust2": "৮টি ভাষা", "home.trust3": "বিনামূল্যে",
       "home.quickTitle": "আপনার প্রয়োজনীয় সবকিছু এক জায়গায়",
-      "home.quickSub": "দশটি সহজ সরঞ্জাম। জটিল মেনু নেই। আজ যা দরকার সেটা দিয়েই শুরু করুন।",
+      "home.quickSub": "সহজ সরঞ্জাম। জটিল মেনু নেই। আজ যা দরকার সেটা দিয়েই শুরু করুন।",
       "home.langTitle": "যে ভাষায় ভাবেন, সেই ভাষায় কথা বলুন",
       "home.langSub": "ভাষা বেছে নিন, তারপর সহজে পড়তে অক্ষরের আকার বাড়ান।",
       "home.supportTitle": "আজ মন ভারী হলে, আপনি একা নন",
+      "home.privacyTitle": "আপনার শরীর, আপনার তথ্য",
+      "home.privacySub": "আপনার স্বাস্থ্য সম্পর্কিত কোনো তথ্য এই ডিভাইস থেকে বাইরে যায় না।",
 
       "dash.welcome": "আবার স্বাগতম",
       "dash.sub": "আজ আপনার স্বাস্থ্যের একটি ছোট্ট চিত্র।",
@@ -357,10 +371,12 @@
       "home.cta1": "ಎನ್ನ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ತೆರೆಲೆ", "home.cta2": "ಸಹಾಯಕೆಡ್ ಪಾತೆರ್‌ಲೆ",
       "home.trust1": "ಗೋಪ್ಯತೆ ಉಂಡು", "home.trust2": "8 ಭಾಷೆಲು", "home.trust3": "ಉಚಿತ",
       "home.quickTitle": "ಇರೆಗ್ ಬೋಡಾಯಿನ ಮುಟ್ಟ ಒಂಜಿ ಜಾಗೊಡು",
-      "home.quickSub": "ಪತ್ತ್ ಸುಲಭ ಸಾಧನೊಲು. ಗೊಂದಲದ ಮೆನು ಇಜ್ಜಿ. ಇನಿ ಬೋಡಾಯಿನೆಡ್ದ್ ಸುರು ಮಲ್ಪುಲೆ.",
+      "home.quickSub": "ಸುಲಭ ಸಾಧನೊಲು. ಗೊಂದಲದ ಮೆನು ಇಜ್ಜಿ. ಇನಿ ಬೋಡಾಯಿನೆಡ್ದ್ ಸುರು ಮಲ್ಪುಲೆ.",
       "home.langTitle": "ಇರೆನ ಯೋಚನೆದ ಭಾಷೆಡೇ ಪಾತೆರ್‌ಲೆ",
       "home.langSub": "ಭಾಷೆ ಆಯ್ಕೆ ಮಲ್ಪುಲೆ, ಬೊಕ್ಕ ಓದೆರೆ ಸುಲಭ ಆವರೆ ಅಕ್ಷರ ಗಾತ್ರ ಹೆಚ್ಚ ಮಲ್ಪುಲೆ.",
       "home.supportTitle": "ಇನಿ ಮನಸ್ಸು ಭಾರ ಉಂಡುಂಡ, ಇರ್ ಒರಿಯೇ ಇಜ್ಜಿ",
+      "home.privacyTitle": "ಇರೆನ ಮೈ, ಇರೆನ ಮಾಹಿತಿ",
+      "home.privacySub": "ಇರೆನ ಆರೋಗ್ಯದ ಯಾವುದೇ ಮಾಹಿತಿ ಈ ಸಾಧನೊರ್ದು ಪಿದಯಿ ಪೋಪುಜಿ.",
 
       "dash.welcome": "ಮತ್ತೆ ಸ್ವಾಗತ",
       "dash.sub": "ಇನಿ ಇರೆನ ಆರೋಗ್ಯದ ಒಂಜಿ ಚಿಕ್ಕ ಚಿತ್ರ.",
@@ -383,6 +399,22 @@
       "banner.english": "ತಪ್ಪು ಅನುವಾದ ಆವಂದಿಲೆಕ್ಕ ವಿಸ್ತಾರದ ಲೇಖನೊಲು ಇಂಗ್ಲಿಷ್‌ಡ್ ತೆರೆಯುಂಡು. ಇರೆನ ಭಾಷೆಡ್ ಸಹಾಯಗ್ ಆಶಾ ಕಾರ್ಯಕರ್ತೆನ್ ಕೇನ್‌ಲೆ ಅತ್ತಂಡ 104ಗ್ ಕರೆ ಮಲ್ಪುಲೆ."
     }
   };
+
+  /* Navigation labels for pages added after the original dictionary. */
+  const EXTRA = {
+    en: { "nav.preventive": "Preventive Health", "page.preventive": "Preventive Healthcare" },
+    hi: { "nav.preventive": "निवारक स्वास्थ्य", "page.preventive": "निवारक स्वास्थ्य देखभाल" },
+    kn: { "nav.preventive": "ಮುನ್ನೆಚ್ಚರಿಕೆ ಆರೋಗ್ಯ", "page.preventive": "ಮುನ್ನೆಚ್ಚರಿಕೆ ಆರೋಗ್ಯ ಸೇವೆ" },
+    ta: { "nav.preventive": "தடுப்பு சுகாதாரம்", "page.preventive": "தடுப்பு சுகாதாரப் பராமரிப்பு" },
+    te: { "nav.preventive": "నివారణ ఆరోగ్యం", "page.preventive": "నివారణ ఆరోగ్య సంరక్షణ" },
+    ml: { "nav.preventive": "പ്രതിരോധ ആരോഗ്യം", "page.preventive": "പ്രതിരോധ ആരോഗ്യ സേവനം" },
+    bn: { "nav.preventive": "প্রতিরোধমূলক স্বাস্থ্য", "page.preventive": "প্রতিরোধমূলক স্বাস্থ্যসেবা" },
+    tcy: { "nav.preventive": "ಮುನ್ನೆಚ್ಚರಿಕೆ ಆರೋಗ್ಯ", "page.preventive": "ಮುನ್ನೆಚ್ಚರಿಕೆ ಆರೋಗ್ಯ ಸೇವೆ" }
+  };
+  Object.keys(EXTRA).forEach(function (code) {
+    if (!STRINGS[code]) STRINGS[code] = {};
+    Object.keys(EXTRA[code]).forEach(function (key) { STRINGS[code][key] = EXTRA[code][key]; });
+  });
 
   const LANGS = [
     { code: "en", label: "English", glyph: "A" },

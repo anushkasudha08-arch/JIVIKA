@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/preventive.css">
   <script>
     (function () {
       try {
@@ -66,13 +67,14 @@
         <div class="dash-grid">
           <div class="stack-lg">
             <div class="card card-lg card-pad" id="cycleCard"></div>
+            <div class="card card-pad" id="preventiveCard"></div>
             <div class="card card-pad tip-card" id="tipCard"></div>
             <div class="card card-pad">
               <div class="card-head">
                 <div class="icon-badge lav sm">
                   <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
                 </div>
-                <div><h3 data-i18n="dash.quick">Quick access</h3><p>All ten tools, one tap away</p></div>
+                <div><h3 data-i18n="dash.quick">Quick access</h3><p>Every tool, one tap away</p></div>
               </div>
               <div class="quick-grid" id="quickGrid"></div>
             </div>
@@ -111,10 +113,12 @@
   <div class="toast-wrap" id="toastWrap" role="status" aria-live="polite"></div>
 
   <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/i18n-preventive.js" defer></script>
   <script src="assets/js/icons.js" defer></script>
   <script src="assets/js/app.js" defer></script>
   <script src="assets/js/data-health.js" defer></script>
   <script src="assets/js/data-wellbeing.js" defer></script>
+  <script src="assets/js/data-preventive.js" defer></script>
   <script src="assets/js/ui.js" defer></script>
   <script src="assets/js/dashboard.js" defer></script>
 </body>
