@@ -80,6 +80,10 @@
                 <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/><circle cx="12" cy="12" r="7.5"/></svg>
                 Use my location
               </button>
+              <button class="btn btn-secondary" type="button" id="showMap">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 6.5 5-2 7 3 5-2v13l-5 2-7-3-5 2Z"/><path d="M8.5 4.5v13M15.5 7.5v13"/></svg>
+                Show map
+              </button>
               <a class="btn btn-secondary" id="mapsFallback" href="https://www.google.com/maps/search/hospitals+near+me" target="_blank" rel="noopener">
                 Open in Maps
               </a>
@@ -114,11 +118,16 @@
             </p>
 
             <p class="small muted" id="resultCount" style="margin:0 0 .6rem"></p>
+            <div class="map-panel" id="mapPanel" hidden>
+              <div class="map-frame" id="mapFrame"></div>
+              <p class="tiny muted" id="mapCaption" style="margin:.5rem 0 0"></p>
+            </div>
             <div class="stack" id="facilityList" aria-live="polite"></div>
 
             <p class="tiny muted" style="margin:1rem 0 0">Facility details come from OpenStreetMap, a free community map.
               Names, phone numbers and timings can be missing or out of date — always call before travelling.
-              Village health centres and small private clinics are often not mapped.</p>
+              Village health centres and small private clinics are often not mapped.
+              The map opens only when you press <strong>Show map</strong>, and it is loaded from openstreetmap.org.</p>
           </div>
 
           <div class="stack-lg">

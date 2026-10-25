@@ -8,10 +8,24 @@
   const icon = JV.icon;
   const esc = JV.esc;
 
+  /* Free, key-less map services. The Overpass mirrors are often at capacity
+     and some networks cannot reach them at all, so every mirror is asked at
+     the same time and Photon (also OpenStreetMap data) is the backup. */
   const OVERPASS = [
     "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter"
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter"
   ];
+  const PHOTON = "https://photon.komoot.io";
+  const OSM_WAIT = 9000;
+  const GEO_WAIT = 6000;
+  const PHOTON_TERMS = {
+    hospital: { term: "hospital", tag: "amenity:hospital" },
+    clinic: { term: "clinic", tag: "amenity:clinic" },
+    doctors: { term: "doctor", tag: "amenity:doctors" },
+    pharmacy: { term: "pharmacy", tag: "amenity:pharmacy" },
+    lab: { term: "laboratory", tag: "healthcare:laboratory" }
+  };
   const RADII = [2, 5, 10, 20];
   const TYPES = [
     { id: "all", label: "Everything" },
@@ -29,7 +43,10 @@
     lab: { label: "Laboratory", icon: "lab", tone: "pink" }
   };
 
-  const state = { lat: null, lon: null, label: "", type: "all", radius: 5, busy: false, failed: false, govOnly: false };
+  const state = {
+    lat: null, lon: null, label: "", type: "all", radius: 5,
+    busy: false, failed: false, govOnly: false, source: ""
+  };
   let allResults = [];
 
   const $ = function (id) { return document.getElementById(id); };
@@ -92,99 +109,227 @@
   }
 
   /* ---------- network ---------- */
+  function wait(ms) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(function () { ctrl.abort(); }, ms);
+    return {
+      signal: ctrl.signal,
+      stop: function () { clearTimeout(timer); },
+      abort: function () { try { ctrl.abort(); } catch (e) { } }
+    };
+  }
+
+  function asJson(res) {
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }
+
+  /* Ask every mirror at once and keep the first real answer. Retrying one busy
+     server after another made a single congestion look like a broken feature. */
   function overpass(query) {
-    let i = 0;
-    function attempt() {
-      if (i >= OVERPASS.length) return Promise.reject(new Error("network"));
-      const ctrl = new AbortController();
-      const timer = setTimeout(function () { ctrl.abort(); }, 15000);
-      return fetch(OVERPASS[i++], {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "data=" + encodeURIComponent(query),
-        signal: ctrl.signal
-      }).then(function (r) {
-        clearTimeout(timer);
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      }).catch(function () {
-        clearTimeout(timer);
-        return attempt();
+    return new Promise(function (resolve, reject) {
+      let left = OVERPASS.length;
+      let settled = false;
+      const guards = [];
+      OVERPASS.forEach(function (url) {
+        const guard = wait(OSM_WAIT);
+        guards.push(guard);
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "data=" + encodeURIComponent(query),
+          signal: guard.signal
+        }).then(asJson).then(function (data) {
+          if (settled) return;
+          settled = true;
+          guards.forEach(function (g) { g.stop(); g.abort(); });
+          resolve(data);
+        }).catch(function () {
+          guard.stop();
+          if (settled) return;
+          left -= 1;
+          if (!left) { settled = true; reject(new Error("network")); }
+        });
       });
+    });
+  }
+
+  /* Photon answers named OpenStreetMap places near a point, one category per
+     request. Its index is smaller than Overpass but it stays reachable when the
+     Overpass mirrors are full, and it needs no key. */
+  function photonSearch(lat, lon, radiusKm) {
+    const ids = Object.keys(PHOTON_TERMS);
+    const out = [];
+    let answered = 0;
+    let i = 0;
+    function step() {
+      if (i >= ids.length) return Promise.resolve({ rows: out, ok: answered });
+      const spec = PHOTON_TERMS[ids[i++]];
+      const guard = wait(GEO_WAIT);
+      const url = PHOTON + "/api/?q=" + encodeURIComponent(spec.term) +
+        "&lat=" + lat.toFixed(4) + "&lon=" + lon.toFixed(4) +
+        "&limit=40&lang=en&osm_tag=" + encodeURIComponent(spec.tag);
+      return fetch(url, { headers: { Accept: "application/json" }, signal: guard.signal })
+        .then(function (r) { guard.stop(); return asJson(r); })
+        .then(function (data) {
+          answered += 1;
+          (data.features || []).forEach(function (f) {
+            const item = photonFacility(f, lat, lon);
+            if (item && item.distance <= radiusKm) out.push(item);
+          });
+          return step();
+        })
+        .catch(function () { guard.stop(); return step(); });
     }
-    return attempt();
+    return step();
+  }
+
+  function photonFacility(f, lat, lon) {
+    const p = f.properties || {};
+    const g = f.geometry && f.geometry.coordinates;
+    if (!g || !p.name) return null;
+    const flat = Number(g[1]);
+    const flon = Number(g[0]);
+    if (!isFinite(flat) || !isFinite(flon)) return null;
+    return {
+      id: "photon/" + (p.osm_type || "x") + "/" + (p.osm_id || p.name),
+      name: p.name,
+      amenity: p.osm_value === "laboratory" ? "lab" : (TYPE_META[p.osm_value] ? p.osm_value : "clinic"),
+      lat: flat,
+      lon: flon,
+      phone: "",
+      website: "",
+      hours: "",
+      emergency: false,
+      gov: false,
+      address: [p.housenumber, p.street, p.city || p.district].filter(Boolean).join(", "),
+      distance: haversine(lat, lon, flat, flon),
+      source: "photon"
+    };
+  }
+
+  function photonPlace(place) {
+    const guard = wait(GEO_WAIT);
+    return fetch(PHOTON + "/api/?q=" + encodeURIComponent(place) + "&limit=1&lang=en", {
+      headers: { Accept: "application/json" }, signal: guard.signal
+    }).then(function (r) { guard.stop(); return asJson(r); }).then(function (data) {
+      const f = data && data.features && data.features[0];
+      const g = f && f.geometry && f.geometry.coordinates;
+      if (!g) return null;
+      const p = f.properties || {};
+      return {
+        lat: Number(g[1]),
+        lon: Number(g[0]),
+        label: [p.name, p.city || p.district, p.state].filter(Boolean).slice(0, 3).join(", ") || place
+      };
+    }).catch(function () { guard.stop(); return null; });
   }
 
   function geocode(place) {
+    const guard = wait(GEO_WAIT);
     const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=en&q=" +
       encodeURIComponent(place);
-    return fetch(url, { headers: { Accept: "application/json" } })
-      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    return fetch(url, { headers: { Accept: "application/json" }, signal: guard.signal })
+      .then(function (r) { guard.stop(); return asJson(r); })
       .then(function (rows) {
-        if (!rows || !rows.length) return null;
-        return { lat: Number(rows[0].lat), lon: Number(rows[0].lon), label: rows[0].display_name.split(",").slice(0, 3).join(", ") };
-      });
+        if (rows && rows.length) {
+          return {
+            lat: Number(rows[0].lat),
+            lon: Number(rows[0].lon),
+            label: rows[0].display_name.split(",").slice(0, 3).join(", ")
+          };
+        }
+        return photonPlace(place);
+      })
+      .catch(function () { guard.stop(); return photonPlace(place); });
   }
 
   /* ---------- search ---------- */
-  function runSearch() {
-    if (state.lat === null || state.lon === null || state.busy) return;
-    state.busy = true;
-    setStatus("Searching within " + state.radius + " km…");
+  function parseOverpass(data) {
+    return (data.elements || []).map(function (el) {
+      const tags = el.tags || {};
+      const lat = el.lat !== undefined ? el.lat : (el.center ? el.center.lat : null);
+      const lon = el.lon !== undefined ? el.lon : (el.center ? el.center.lon : null);
+      if (lat === null || lon === null) return null;
+      if (!tags.name && !tags["name:en"]) return null;
+      const amenity = tags.amenity || (tags.healthcare === "laboratory" ? "lab" : "clinic");
+      const ownership = String(tags["operator:type"] || "").toLowerCase();
+      const gov = ownership === "government" || ownership === "public" ||
+        /government|govt\.?|public health|state health|district health|national health/i.test(String(tags.operator || ""));
+      return {
+        id: el.type + "/" + el.id,
+        name: tags["name:en"] || tags.name,
+        amenity: amenity,
+        lat: lat,
+        lon: lon,
+        phone: tags.phone || tags["contact:phone"] || tags["contact:mobile"] || "",
+        website: tags.website || tags["contact:website"] || "",
+        hours: tags.opening_hours || "",
+        emergency: tags.emergency === "yes",
+        gov: gov,
+        address: (tags["addr:full"] ||
+          [tags["addr:housenumber"], tags["addr:street"], tags["addr:city"]].filter(Boolean).join(", ")),
+        distance: haversine(state.lat, state.lon, lat, lon),
+        source: "overpass"
+      };
+    }).filter(Boolean);
+  }
 
+  function dedupe(list) {
+    const seen = {};
+    return list.filter(function (f) {
+      const key = f.name.toLowerCase() + "|" + f.lat.toFixed(3) + "|" + f.lon.toFixed(3);
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+  }
+
+  function buildQuery() {
     const around = "(around:" + state.radius * 1000 + "," + state.lat.toFixed(5) + "," + state.lon.toFixed(5) + ")";
     const selectors = ['["amenity"~"^(hospital|clinic|doctors|pharmacy)$"]', '["healthcare"="laboratory"]'];
     let body = "";
     selectors.forEach(function (sel) {
       body += "node" + sel + around + ";way" + sel + around + ";relation" + sel + around + ";";
     });
-    const query = "[out:json][timeout:20];(" + body + ");out center 100;";
+    return "[out:json][timeout:20];(" + body + ");out center 120;";
+  }
 
-    overpass(query).then(function (data) {
-      state.busy = false;
-      state.failed = false;
-      const seen = {};
-      allResults = (data.elements || []).map(function (el) {
-        const tags = el.tags || {};
-        const lat = el.lat !== undefined ? el.lat : (el.center ? el.center.lat : null);
-        const lon = el.lon !== undefined ? el.lon : (el.center ? el.center.lon : null);
-        if (lat === null || lon === null) return null;
-        if (!tags.name && !tags["name:en"]) return null;
-        const amenity = tags.amenity || (tags.healthcare === "laboratory" ? "lab" : "clinic");
-        const ownership = String(tags["operator:type"] || "").toLowerCase();
-        const gov = ownership === "government" || ownership === "public" ||
-          /government|govt\.?|public health|state health|district health|national health/i.test(String(tags.operator || ""));
+  function runSearch() {
+    if (state.lat === null || state.lon === null || state.busy) return;
+    state.busy = true;
+    state.failed = false;
+    setStatus("Searching within " + state.radius + " km…");
+
+    /* Photon also reports how many categories it answered, so an empty answer
+       can be told apart from an offline device. */
+    const backup = function () {
+      return photonSearch(state.lat, state.lon, state.radius).then(function (res) {
         return {
-          id: el.type + "/" + el.id,
-          name: tags["name:en"] || tags.name,
-          amenity: amenity,
-          lat: lat,
-          lon: lon,
-          phone: tags.phone || tags["contact:phone"] || tags["contact:mobile"] || "",
-          website: tags.website || tags["contact:website"] || "",
-          hours: tags.opening_hours || "",
-          emergency: tags.emergency === "yes",
-          gov: gov,
-          address: (tags["addr:full"] ||
-            [tags["addr:housenumber"], tags["addr:street"], tags["addr:city"]].filter(Boolean).join(", ")),
-          distance: haversine(state.lat, state.lon, lat, lon)
+          rows: res.rows,
+          source: res.rows.length ? "photon" : (res.ok ? "empty" : "none")
         };
-      }).filter(function (f) {
-        if (!f) return false;
-        const key = f.name.toLowerCase() + "|" + f.lat.toFixed(3) + "|" + f.lon.toFixed(3);
-        if (seen[key]) return false;
-        seen[key] = true;
-        return true;
-      });
+      }, function () { return { rows: [], source: "none" }; });
+    };
 
-      renderResults();
-      setStatus("Found " + allResults.length + " facilities within " + state.radius + " km of " + state.label + ".");
-    }).catch(function () {
+    overpass(buildQuery()).then(function (data) {
+      const rows = dedupe(parseOverpass(data));
+      return rows.length ? { rows: rows, source: "overpass" } : backup();
+    }, backup).then(function (pack) {
       state.busy = false;
-      state.failed = true;
-      allResults = [];
+      state.failed = pack.source === "none";
+      state.source = pack.source;
+      allResults = pack.rows;
       renderResults();
-      setStatus("Could not reach the map service. Check your internet, or use “Open in Maps”.", true);
+      if (state.failed) {
+        setStatus("The free map services could not be reached. Check your internet, or use the map and “Open in Maps”.", true);
+      } else {
+        setStatus("Found " + allResults.length + " facilities within " + state.radius + " km of " + state.label + "." +
+          (pack.source === "photon" ? " The main map database was busy, so these come from the backup service." : ""));
+      }
+      const btn = $("showMap");
+      if (btn) btn.disabled = false;
+      if (mapOpen()) showMap(state.lat, state.lon, state.label);
     });
   }
 
@@ -207,6 +352,8 @@
         '<div class="f-actions">' +
           (phone ? '<a href="tel:' + esc(phone.replace(/[^\d+]/g, "")) + '">' + icon("phone") + esc(phone) + "</a>" : "") +
           '<a href="' + dir + '" target="_blank" rel="noopener">' + icon("pin") + "Directions</a>" +
+          '<button type="button" class="f-map" data-map="' + f.lat.toFixed(5) + "," + f.lon.toFixed(5) +
+            '" data-name="' + esc(f.name) + '">' + icon("pin") + "Map</button>" +
           '<a href="https://www.google.com/maps/dir/?api=1&destination=' + f.lat.toFixed(5) + "," + f.lon.toFixed(5) +
             '" target="_blank" rel="noopener">' + icon("external") + "Google Maps</a>" +
           (f.website ? '<a href="' + esc(f.website) + '" target="_blank" rel="noopener">Website</a>' : "") +
@@ -237,14 +384,16 @@
     if (count) {
       count.textContent = rows.length
         ? rows.length + (rows.length === 1 ? " place" : " places") + " listed, nearest first" +
-          (state.govOnly ? " · government-tagged only" : "")
+          (state.govOnly ? " · government-tagged only" : "") +
+          (state.source === "photon" ? " · backup map service" : "")
         : "";
     }
 
     if (state.failed) {
       list.innerHTML = JV.ui.emptyState("alert", "Map service unavailable",
-        "The free map service could not be reached. Check your internet, call 104, or open Google Maps directly.") +
+        "Neither free map service answered. Check your internet, open the map view, call 104, or use Google Maps.") +
         '<div class="row" style="justify-content:center;gap:.5rem">' +
+          (state.lat !== null ? '<button class="btn btn-secondary btn-sm" type="button" data-map-here="1">Show map</button>' : "") +
           '<a class="btn btn-secondary btn-sm" href="tel:104">Call 104</a>' +
           '<a class="btn btn-secondary btn-sm" href="' + mapsHref() + '" target="_blank" rel="noopener">Open Google Maps</a>' +
         "</div>";
@@ -260,6 +409,7 @@
             ? "Try “Everything”, or increase the distance you can travel."
             : "Village sub-centres and small clinics are often missing from the map. Call 104 or ask your ASHA worker — or open Google Maps.") +
         '<div class="row" style="justify-content:center;gap:.5rem">' +
+          '<button class="btn btn-secondary btn-sm" type="button" data-map-here="1">Show map</button>' +
           '<a class="btn btn-secondary btn-sm" href="tel:104">Call 104</a>' +
           '<a class="btn btn-secondary btn-sm" id="mapsEmpty" href="' + mapsHref() + '" target="_blank" rel="noopener">Open Google Maps</a>' +
         "</div>";
@@ -270,6 +420,51 @@
         ? '<p class="tiny muted" style="margin-top:.4rem">Only a few places are mapped in this area. ' +
           "Increase the distance you can travel, or open Google Maps to compare." + "</p>"
         : "");
+  }
+
+  /* ---------- map ---------- */
+  function mapOpen() {
+    const panel = $("mapPanel");
+    return !!panel && !panel.hidden;
+  }
+
+  /* The map is the official OpenStreetMap embed: free, no key, and only loaded
+     after the user asks for it. */
+  function mapSrc(lat, lon, radiusKm) {
+    const dLat = radiusKm / 111;
+    const dLon = radiusKm / (111 * Math.max(Math.cos(lat * Math.PI / 180), 0.2));
+    return "https://www.openstreetmap.org/export/embed.html?bbox=" +
+      (lon - dLon).toFixed(4) + "%2C" + (lat - dLat).toFixed(4) + "%2C" +
+      (lon + dLon).toFixed(4) + "%2C" + (lat + dLat).toFixed(4) +
+      "&layer=mapnik&marker=" + lat.toFixed(5) + "%2C" + lon.toFixed(5);
+  }
+
+  function showMap(lat, lon, label) {
+    const panel = $("mapPanel");
+    const frame = $("mapFrame");
+    if (!panel || !frame) return;
+    let iframe = frame.querySelector("iframe");
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer";
+      iframe.setAttribute("allowfullscreen", "");
+      frame.appendChild(iframe);
+    }
+    iframe.title = "OpenStreetMap of health facilities near " + (label || "this area");
+    iframe.src = mapSrc(lat, lon, state.radius);
+    const cap = $("mapCaption");
+    if (cap) {
+      cap.textContent = "Map centred on " + (label || "this area") +
+        " · Map data © OpenStreetMap contributors. The list below is the text version of this map.";
+    }
+    panel.hidden = false;
+  }
+
+  function mapTo(lat, lon, label) {
+    showMap(lat, lon, label || state.label);
+    const panel = $("mapPanel");
+    if (panel && panel.scrollIntoView) panel.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   /* ---------- location ---------- */
@@ -370,6 +565,36 @@
     if (input) {
       input.addEventListener("keydown", function (e) {
         if (e.key === "Enter") { e.preventDefault(); searchPlace(); }
+      });
+    }
+
+    const mapBtn = $("showMap");
+    if (mapBtn) {
+      mapBtn.addEventListener("click", function () {
+        if (state.lat === null) {
+          setStatus("Find a place first — the map will then open on it.", true);
+          if (input) input.focus();
+          return;
+        }
+        mapTo(state.lat, state.lon, state.label);
+      });
+    }
+
+    /* Results are re-rendered often, so map buttons are handled on the list. */
+    const list = $("facilityList");
+    if (list) {
+      list.addEventListener("click", function (e) {
+        const hit = e.target.closest ? e.target.closest("[data-map],[data-map-here]") : null;
+        if (!hit) return;
+        if (hit.hasAttribute("data-map-here")) {
+          if (state.lat !== null) mapTo(state.lat, state.lon, state.label);
+          return;
+        }
+        const parts = String(hit.getAttribute("data-map")).split(",");
+        const fLat = Number(parts[0]);
+        const fLon = Number(parts[1]);
+        if (!isFinite(fLat) || !isFinite(fLon)) return;
+        mapTo(fLat, fLon, hit.getAttribute("data-name"));
       });
     }
   }
